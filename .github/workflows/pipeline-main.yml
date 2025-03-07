@@ -12,11 +12,11 @@ jobs:
         secrets: inherit
         with:
             GCP_PROJECT_ID: hackathon0-project-452818
-            CLOUD_RUN_SERVICE: vlab_frontend
+            CLOUD_RUN_SERVICE: vlab-frontend
             CLOUD_RUN_REGION: us-central1
-            GAR_LOCATION: us-central1-docker.pkg.dev/hackathon0-project-452818/vlab_frontend
+            GAR_LOCATION: us-central1-docker.pkg.dev/hackathon0-project-452818/vlab-frontend
             GAR_LOCATION_PREFIX: us-central1-docker.pkg.dev
-            IMAGE_NAME: vlab_frontend-image
+            IMAGE_NAME: vlab-frontend-image
             SERVICE_ACCOUNT: hackathon0-sa@hackathon0-project-452818.iam.gserviceaccount.com
             DOCKER_FILE: Dockerfile.app
             CLOUD_RUN_RAM: 512Mi
