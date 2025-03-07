@@ -75,8 +75,8 @@ jobs:
             --allow-unauthenticated \
             --service-account=${{ inputs.SERVICE_ACCOUNT }} \
             --memory ${{ inputs.CLOUD_RUN_RAM }}
-            --set-secrets=NEXT_PUBLIC_API_URL=projects/${{ inputs.PROJECT_ID }}/secrets/NEXT_PUBLIC_API_URL:latest \
-            --set-secrets=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=projects/${{ inputs.PROJECT_ID }}/secrets/NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:latest
+            --set-secrets=NEXT_PUBLIC_API_URL=projects/${{ inputs.GCP_PROJECT_ID }}/secrets/NEXT_PUBLIC_API_URL:latest \
+            --set-secrets=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=projects/${{ inputs.GCP_PROJECT_ID }}/secrets/NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:latest
           # Fetch and display the deployed service URL
           DEPLOYED_URL=$(gcloud run services describe ${{ inputs.CLOUD_RUN_SERVICE }} \
             --region ${{ inputs.CLOUD_RUN_REGION }} \
