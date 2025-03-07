@@ -1,0 +1,1123 @@
+/* ===================== GLOBAL STYLES ===================== */
+:root {
+  --neon-blue: #0ff;
+  --neon-purple: #9d00ff;
+  --neon-green: #00ff9d;
+  --dark-blue: #020223;
+  --cyber-black: #0a0a1a;
+  --matrix-green: #00ff41;
+  --hologram-blue: rgba(0, 195, 255, 0.7);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Orbitron", "Rajdhani", sans-serif;
+  background-color: var(--cyber-black);
+  color: white;
+  overflow-x: hidden;
+}
+
+.neo-futuristic {
+  position: relative;
+  min-height: 100vh;
+  background: radial-gradient(
+    circle at center,
+    rgba(2, 2, 35, 0.8),
+    rgba(0, 0, 10, 1)
+  );
+}
+
+/* ===================== PARTICLE CANVAS ===================== */
+.particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ===================== HERO SECTION ===================== */
+.hero-container {
+  margin-top: 5%;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-hologram {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hologram-circle {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--hologram-blue);
+  border-radius: 50%;
+  box-shadow: 0 0 30px var(--neon-blue);
+  opacity: 0.4;
+  animation: pulse 3s infinite, rotate 20s linear infinite;
+}
+
+.hologram-lines {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 550px;
+  height: 550px;
+  transform: translate(-50%, -50%);
+}
+
+.hologram-lines::before,
+.hologram-lines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid var(--hologram-blue);
+  border-radius: 50%;
+  animation: rotate 30s linear infinite reverse;
+}
+
+.hologram-lines::after {
+  width: 650px;
+  height: 650px;
+  top: -50px;
+  left: -50px;
+  border-width: 15px 0;
+  border-style: dashed;
+  opacity: 0.2;
+  animation-duration: 40s;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 1000px;
+  padding: 0 2rem;
+}
+
+.cyber-glitch {
+  font-size: 4rem;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  margin-bottom: 0.5rem;
+  position: relative;
+  animation: glitch 5s infinite;
+}
+
+.cyber-glitch::before,
+.cyber-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.cyber-glitch::before {
+  animation: glitch-effect 3s infinite;
+  color: var(--neon-blue);
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  transform: translate(-2px, -2px);
+}
+
+.cyber-glitch::after {
+  animation: glitch-effect 2s infinite reverse;
+  color: var(--neon-purple);
+  clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+  transform: translate(2px, 2px);
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 2rem 0;
+  letter-spacing: 1px;
+  animation: fadeIn 1.5s ease-out forwards 1s;
+}
+
+.tech-bracket {
+  color: var(--neon-blue);
+  font-weight: 700;
+  padding: 0 0.5rem;
+}
+
+/* ===================== STATS COUNTER ===================== */
+.dynamic-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 4rem 0;
+  animation: fadeIn 2s ease-out forwards 1.5s;
+  opacity: 0;
+}
+
+.stat-item {
+  position: relative;
+  padding: 2rem;
+}
+
+.stat-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 50, 80, 0.2);
+  transform: skew(-5deg);
+}
+
+.stat-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--neon-blue);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+}
+
+.stat-label {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===================== CONTENT GRID ===================== */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  z-index: 1;
+  position: relative;
+}
+
+.content-panel {
+  background: rgba(3, 8, 20, 0.8);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.content-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  animation: scanline 2s linear infinite;
+}
+
+.content-panel:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+.overview-panel {
+  grid-column: span 12;
+  animation: slideFromLeft 1s ease-out forwards;
+  opacity: 0;
+}
+
+.beneficiaries-panel {
+  grid-column: span 6;
+  animation: slideFromBottom 1s ease-out forwards 0.3s;
+  opacity: 0;
+}
+
+.features-panel {
+  grid-column: span 6;
+  animation: slideFromBottom 1s ease-out forwards 0.6s;
+  opacity: 0;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.panel-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 1rem;
+  background: rgba(0, 255, 255, 0.2);
+  border-radius: 50%;
+  position: relative;
+}
+
+.panel-icon::before,
+.panel-icon::after {
+  content: "";
+  position: absolute;
+  background: var(--neon-blue);
+}
+
+.panel-icon::before {
+  width: 15px;
+  height: 2px;
+  top: 14px;
+  left: 8px;
+}
+
+.panel-icon::after {
+  width: 2px;
+  height: 15px;
+  top: 8px;
+  left: 14px;
+}
+
+.panel-header h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: white;
+  margin: 0;
+}
+
+.blink {
+  animation: blink 1.2s steps(1) infinite;
+  color: var(--neon-blue);
+  font-weight: 700;
+}
+
+.panel-content {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* ===================== TECH DIAGRAM ===================== */
+.tech-diagram {
+  position: relative;
+  height: 250px;
+  margin: 3rem 0;
+}
+
+.diagram-node {
+  position: absolute;
+  padding: 1rem;
+  background: rgba(0, 20, 40, 0.7);
+  border: 1px solid var(--neon-blue);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  font-size: 0.9rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.diagram-node:hover {
+  background: rgba(0, 30, 60, 0.9);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.diagram-node.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 40, 80, 0.8);
+  padding: 1.5rem;
+  border-width: 2px;
+  z-index: 3;
+}
+
+.diagram-node.n1 {
+  top: 20%;
+  left: 25%;
+}
+
+.diagram-node.n2 {
+  top: 20%;
+  right: 25%;
+}
+
+.diagram-node.n3 {
+  bottom: 20%;
+  left: 25%;
+}
+
+.diagram-node.n4 {
+  bottom: 20%;
+  right: 25%;
+}
+
+.diagram-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.diagram-lines::before,
+.diagram-lines::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+      circle at center,
+      transparent 40%,
+      rgba(0, 255, 255, 0.1) 70%,
+      transparent 71%
+    ),
+    radial-gradient(
+      circle at center,
+      transparent 65%,
+      rgba(0, 255, 255, 0.1) 75%,
+      transparent 76%
+    );
+  animation: pulse 4s infinite alternate;
+}
+
+/* ===================== HEXAGON GRID ===================== */
+.hexagon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 -10px;
+}
+
+.hexagon-item {
+  width: 180px;
+  margin: 20px 10px;
+}
+
+.hexagon {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 115%;
+  background-color: rgba(0, 20, 40, 0.7);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  transition: all 0.3s ease;
+}
+
+.hexagon::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  background-color: rgba(0, 30, 60, 0.8);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  z-index: 1;
+}
+
+.hexagon-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.hexagon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+}
+
+.hexagon:hover::before {
+  background-color: rgba(0, 40, 80, 0.9);
+}
+
+.hexagon-content h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--neon-blue);
+}
+
+.hexagon-content p {
+  font-size: 0.85rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===================== FEATURE CARDS ===================== */
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: linear-gradient(
+    145deg,
+    rgba(0, 15, 30, 0.8),
+    rgba(0, 30, 60, 0.4)
+  );
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  background: rgba(0, 255, 255, 0.1);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
+  color: white;
+}
+
+.feature-card p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 255, 0.1) 0%,
+    transparent 30%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover .card-glow {
+  opacity: 1;
+}
+
+/* ===================== CTA SECTION ===================== */
+.cta-container {
+  position: relative;
+  text-align: center;
+  padding: 6rem 2rem;
+  margin-top: 4rem;
+  z-index: 1;
+}
+
+.cta-hologram {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.hologram-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(0, 255, 255, 0.7);
+  animation: ripple 3s infinite;
+}
+
+.cta-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* ===================== CYBER BUTTON ===================== */
+.cyber-button {
+  display: inline-block;
+  position: relative;
+  padding: 1.2rem 3rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: white;
+  background: transparent;
+  border: 2px solid var(--neon-blue);
+  border-radius: 5px;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.cyber-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 255, 255, 0.2);
+  transform: translateX(-100%) skewX(-15deg);
+  transition: transform 0.5s ease;
+  z-index: -1;
+}
+
+.cyber-button:hover {
+  color: white;
+  border-color: var(--neon-green);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.cyber-button:hover::before {
+  transform: translateX(0) skewX(-15deg);
+}
+
+.cyber-button-glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(0, 255, 255, 0.5) 10%,
+    transparent 20%
+  );
+  animation: glitch-button 3s infinite;
+}
+
+.cyber-button:hover .cyber-button-glitch {
+  opacity: 1;
+}
+
+.cyber-button-tag {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-size: 0.7rem;
+  color: var(--neon-blue);
+  opacity: 0.7;
+}
+
+/* ===================== ANIMATIONS ===================== */
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: skew(0deg);
+  }
+  20% {
+    transform: skew(0deg);
+  }
+  21% {
+    transform: skew(2deg);
+  }
+  22% {
+    transform: skew(-1deg);
+  }
+  23% {
+    transform: skew(0deg);
+  }
+  50% {
+    transform: skew(0deg);
+  }
+  51% {
+    transform: skew(-2deg);
+  }
+  52% {
+    transform: skew(1deg);
+  }
+  53% {
+    transform: skew(0deg);
+  }
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+@keyframes glitch-effect {
+  0% {
+    transform: translate(0);
+  }
+  10% {
+    transform: translate(-5px, 5px);
+  }
+  20% {
+    transform: translate(-5px, -5px);
+  }
+  30% {
+    transform: translate(5px, 5px);
+  }
+  40% {
+    transform: translate(5px, -5px);
+  }
+  50% {
+    transform: translate(-5px, 5px);
+  }
+  60% {
+    transform: translate(-5px, -5px);
+  }
+  70% {
+    transform: translate(5px, 5px);
+  }
+  80% {
+    transform: translate(-5px, -5px);
+  }
+  90% {
+    transform: translate(5px, 5px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-button {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.3),
+      0 0 0 20px rgba(0, 255, 255, 0.3), 0 0 0 40px rgba(0, 255, 255, 0.3),
+      0 0 0 60px rgba(0, 255, 255, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(0, 255, 255, 0.3),
+      0 0 0 40px rgba(0, 255, 255, 0.3), 0 0 0 60px rgba(0, 255, 255, 0.3),
+      0 0 0 80px rgba(0, 255, 255, 0);
+  }
+}
+
+/* ===================== RESPONSIVE DESIGN ===================== */
+@media screen and (max-width: 1200px) {
+  .feature-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .content-grid {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .beneficiaries-panel,
+  .features-panel {
+    grid-column: span 12;
+  }
+
+  .cyber-glitch {
+    font-size: 3.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+  }
+
+  .dynamic-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-item {
+    margin-bottom: 2rem;
+  }
+  .hero-container{
+    padding-top: 60%;
+    margin-top: 10%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content-panel {
+    padding: 1.5rem;
+  }
+
+  .cyber-glitch {
+    font-size: 2.8rem;
+  }
+  .hero-container{
+    padding-top: 70%;
+    margin-top: 10%;
+  }
+
+  .tech-diagram {
+    height: 400px;
+  }
+
+  .diagram-node.center {
+    top: 30%;
+  }
+
+  .diagram-node.n1,
+  .diagram-node.n2 {
+    top: 15%;
+  }
+
+  .diagram-node.n3,
+  .diagram-node.n4 {
+    top: 60%;
+  }
+
+  .diagram-node.n1,
+  .diagram-node.n3 {
+    left: 10%;
+  }
+
+  .diagram-node.n2,
+  .diagram-node.n4 {
+    right: 10%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .cyber-glitch {
+    font-size: 2rem;
+    letter-spacing: 3px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .panel-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .cta-title {
+    font-size: 2rem;
+  }
+
+  .cyber-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+
+  .hexagon-grid {
+    justify-content: center;
+  }
+
+  .hexagon-item {
+    width: 130px;
+  }
+
+  .tech-diagram {
+    display: none;
+  }
+}
+
+/* ===================== DOCUMENT ENHANCEMENTS ===================== */
+::selection {
+  background: var(--neon-blue);
+  color: var(--dark-blue);
+  text-shadow: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 20, 40, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neon-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-green);
+}
+
+/* Add loader animation for dynamic stats */
+.stat-number {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-number::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: var(--neon-blue);
+  animation: stat-loader 2s ease forwards 2s;
+}
+
+@keyframes stat-loader {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Add number counter animation for stats */
+@keyframes countUp {
+  from {
+    content: attr(data-count-from);
+  }
+  to {
+    content: attr(data-count);
+  }
+}
+
+/* Make cyber button more interactive */
+.cyber-button:active {
+  transform: scale(0.95);
+}
+
+/* Add hover effects to panel headers */
+.panel-header:hover .panel-icon {
+  transform: rotate(90deg);
+  transition: transform 0.5s ease;
+}
+
+/* Add neon text shadow for important elements */
+h1,
+h2,
+h3,
+.cyber-button {
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+/* Add grid lines to background */
+.neo-futuristic::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+      rgba(0, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+}
+
+
+.system-overview {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #00ffff;
+  border-radius: 10px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 15px #00ffff;
+}
+
+.system-overview h2 {
+  color: #00ffff;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.system-overview p {
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.system-overview ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+
+.system-overview li {
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.system-overview li::before {
+  content: "•";
+  color: #00ffff;
+  font-size: 1.2rem;
+  position: absolute;
+  left: -1rem;
+  top: 0;
+}
+
+@media (max-width: 768px) {
+  .system-overview {
+    padding: 1.5rem;
+  }
+
+  .system-overview h2 {
+    font-size: 1.5rem;
+  }
+
+  .system-overview p,
+  .system-overview li {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .system-overview {
+    padding: 1rem;
+  }
+
+  .system-overview h2 {
+    font-size: 1.2rem;
+  }
+
+  .system-overview p,
+  .system-overview li {
+    font-size: 0.8rem;
+  }
+}

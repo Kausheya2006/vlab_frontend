@@ -1,0 +1,26 @@
+/* Ensure the slider adapts to mobile screens */
+.slider {
+  width: 100%; /* Full width */
+  max-width: 800px; /* Prevents stretching */
+  margin: auto; /* Centers the slider */
+}
+
+/* Image inside slider */
+.slider img {
+  width: 100%; /* Makes it responsive */
+  height: auto; /* Maintains aspect ratio */
+  object-fit: cover; /* Prevents distortion */
+}
+
+/* Adjust button sizes for mobile */
+@media (max-width: 768px) {
+  .slider img {
+    height: 300px; /* Reduce height on smaller screens */
+  }
+
+  /* Make navigation buttons smaller */
+  .btn {
+    padding: 8px;
+    font-size: 14px;
+  }
+}

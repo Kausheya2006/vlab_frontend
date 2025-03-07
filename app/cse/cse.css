@@ -1,0 +1,553 @@
+.cse-page {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f1924, #1a1a2e);
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  padding-top: 20px;
+  perspective: 1000px; /* 3D perspective for child elements */
+  background-size: 300% 300%;
+  animation: csePageGradient 12s ease infinite;
+}
+@keyframes csePageGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 📌 Button to Toggle Sidebar with 3D Effect */
+.toggle-sidebar-btn {
+  position: fixed;
+  top: 150px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(145deg, #ff5733, #ff3366);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(255, 87, 51, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: translateZ(0);
+}
+
+.toggle-sidebar-btn svg {
+  display: block;
+  margin: 0 auto;
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* Enhanced hover effect for button */
+.toggle-sidebar-btn:hover {
+  transform: translateY(-5px) translateZ(10px) scale(1.05);
+  box-shadow: 0 15px 25px rgba(255, 87, 51, 0.4), 0 10px 10px rgba(0, 0, 0, 0.1),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+  animation: pulseSidebar 1.5s infinite;
+}
+
+@keyframes pulseSidebar {
+  0% {
+    box-shadow: 0 0 10px #ff5733, 0 0 20px #ff3366;
+  }
+  50% {
+    box-shadow: 0 0 20px #ff5733, 0 0 40px #ff3366;
+  }
+  100% {
+    box-shadow: 0 0 10px #ff5733, 0 0 20px #ff3366;
+  }
+}
+
+.toggle-sidebar-btn:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 5px 10px rgba(255, 87, 51, 0.2);
+}
+
+/* 📌 Left Side Navbar with Glassmorphism */
+.side-navbar {
+  width: 20%;
+  height: 100vh;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 30, 46, 0.8),
+    rgba(51, 51, 77, 0.8)
+  );
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  padding-top: 8%;
+  position: fixed;
+  left: 0;
+  top: 75px;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 30;
+  transform: translateX(-100%) rotateY(10deg);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 📌 Visible Sidebar with 3D Effect */
+.side-navbar.visible {
+  transform: translateX(0) rotateY(0);
+}
+
+/* 🎯 Navbar Items with Neomorphic Design */
+.nav-item {
+  width: 90%;
+  padding: 15px;
+  margin: 12px 0;
+  background: linear-gradient(145deg, #232338, #1e1e2e);
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 12px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5),
+    -2px -2px 5px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Enhanced hover and active states for nav items */
+.nav-item:hover {
+  background: linear-gradient(145deg, #2a2a40, #232338);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.6),
+    -2px -2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active {
+  background: linear-gradient(145deg, #ff5733, #ff3366);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(255, 51, 51, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+  animation: activePop 0.3s ease-in-out;
+}
+@keyframes activePop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+/* Glowing effect for active items */
+.nav-item.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 87, 51, 0.8) 0%,
+    rgba(255, 87, 51, 0) 70%
+  );
+  opacity: 0.3;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+/* ✅ Right Content Area with 3D Card Effect */
+.content-area {
+  flex: 1;
+  margin-left: 20%;
+  padding: 30px;
+  margin-top: 80px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  perspective: 1500px;
+  /* Custom Scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #ff5733 rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.2s;
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar for webkit browsers */
+.content-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content-area::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.content-area::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff5733, #ff3366);
+  border-radius: 10px;
+}
+
+/* 🎯 Shifted Content with 3D Effect */
+.content-area.shifted {
+  margin-left: 0;
+  padding-left: 15px;
+  transform: translateZ(0);
+}
+
+/* 🎨 Content Box Styling with 3D Card Effect */
+.content-box {
+  background: rgba(30, 30, 60, 0.5);
+  padding: 35px;
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-top: 0px;
+  margin-bottom: 30px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  transform: translateZ(0) rotateX(0deg);
+}
+
+.content-box:hover {
+  transform: translateY(-10px) translateZ(20px) rotateX(2deg);
+  box-shadow: 0 35px 60px rgba(0, 0, 0, 0.6);
+  animation: popUp 0.4s ease;
+}
+
+@keyframes popUp {
+  0% {
+    transform: translateY(-10px) translateZ(20px) rotateX(2deg) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) translateZ(30px) rotateX(2deg) scale(1.03);
+  }
+  100% {
+    transform: translateY(-10px) translateZ(20px) rotateX(2deg) scale(1);
+  }
+}
+/* 3D Border Effect */
+.content-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 95%, #ff5733 95%);
+  background-size: 200% 200%;
+  pointer-events: none;
+  border-radius: 16px;
+  z-index: -1;
+  animation: borderGlow 4s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* 🛠️ Header Styling with 3D Text */
+.content-area h2 {
+  color: #ff5733;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 87, 51, 0.8);
+  position: relative;
+  display: inline-block;
+}
+
+.content-area h2::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, #ff5733, transparent);
+  border-radius: 3px;
+}
+
+.content-area h3 {
+  color: #ff9f1a;
+  font-size: 22px;
+  margin: 20px 0 15px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* 📝 Text Content with Improved Readability */
+.content-box p {
+  color: #eaeaea;
+  font-size: 16px;
+  line-height: 1.8;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* Enhanced List Styling */
+.content-box ul {
+  padding-left: 20px;
+  margin: 15px 0;
+}
+
+.content-box ul li {
+  color: #ddd;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.content-box ul li::before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #ff5733, #ff3366);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 87, 51, 0.8);
+}
+
+/* Experiments List Enhanced Styling */
+.experiments-list li {
+  padding: 12px;
+  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  border-left: 3px solid #ff5733;
+}
+
+.experiments-list li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 3D Target Audience Section */
+.target-audience .audience-category {
+  padding: 15px;
+  margin-bottom: 20px;
+  background: rgba(30, 30, 60, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+.target-audience .audience-category:hover {
+  transform: translateZ(10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 3D Feedback Button */
+.feedback-button {
+  background: linear-gradient(135deg, #ff5733, #ff3366);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 20px 0;
+  box-shadow: 0 10px 20px rgba(255, 87, 51, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.feedback-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 25px rgba(255, 87, 51, 0.4);
+}
+
+.feedback-button:active {
+  transform: translateY(2px) scale(0.95);
+}
+
+/* 3D Shine Effect for Button */
+.feedback-button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.feedback-button:hover::after {
+  opacity: 1;
+  animation: shine 1.5s ease-in-out;
+  box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(45deg) translateX(-100%);
+  }
+  100% {
+    transform: rotate(45deg) translateX(100%);
+  }
+}
+
+/* Enhanced Styling for Star Ratings */
+.experiments-list li {
+  display: flex;
+  flex-direction: column;
+}
+
+.experiments-list li::after {
+  content: attr(data-rating);
+  margin-top: 5px;
+  font-size: 18px;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+/* 🎯 Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .side-navbar {
+    width: 220px;
+    transform: translateX(-100%) rotateY(10deg);
+  }
+
+  .content-area {
+    margin-left: 0;
+    margin-top: 100px;
+  }
+
+  /* Button to toggle sidebar only on mobile */
+  .toggle-sidebar-btn {
+    display: block;
+  }
+
+  /* Sidebar is hidden by default on mobile */
+  .side-navbar {
+    transform: translateX(-100%) rotateY(10deg);
+  }
+
+  /* Show sidebar when visible class is applied */
+  .side-navbar.visible {
+    transform: translateX(0) rotateY(0);
+  }
+}
+
+/* Mobile view */
+@media (max-width: 480px) {
+  .side-navbar {
+    width: 180px;
+  }
+
+  .content-area {
+    margin-left: 0;
+    margin-top: 120px;
+    padding: 20px 15px;
+  }
+
+  .nav-item {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .content-area h2 {
+    font-size: 22px;
+  }
+
+  .content-box {
+    padding: 25px;
+  }
+
+  .content-box p {
+    font-size: 14px;
+  }
+}
+
+/* Show sidebar on desktop by default */
+@media (min-width: 769px) {
+  .side-navbar {
+    transform: translateX(0) rotateY(0);
+  }
+
+  .toggle-sidebar-btn {
+    display: none;
+  }
+}
+.side-navbar.visible::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1),
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.experiments-list li:hover::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 50px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
+  left: 120%;
+}

@@ -1,0 +1,36 @@
+/* NPTEL Link Container */
+.nptel-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* NPTEL Link Styling */
+.nptel-link {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffcc00;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    opacity: 0;  /* Initially hidden */
+    animation: blinkEffect 4s ease-in-out infinite;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Hover Effect */
+.nptel-link:hover {
+    transform: scale(1.1);
+    color: #00c6ff;
+    text-shadow: 0px 0px 10px rgba(0, 198, 255, 0.8);
+}
+
+/* Blinking Animation */
+@keyframes blinkEffect {
+    0% { opacity: 0; }
+    25% { opacity: 1; }
+    50% { opacity: 1; }
+    75% { opacity: 0; }
+    100% { opacity: 0; }
+}

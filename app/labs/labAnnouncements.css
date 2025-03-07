@@ -1,0 +1,63 @@
+/* Announcements Section for Lab Page */
+.lab-announcements-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 198, 255, 0.3);
+    text-align: center;
+    color: white;
+}
+
+/* Title */
+.lab-announcements-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #00c6ff, #007bff);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0px 0px 15px rgba(0, 198, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+/* Scrolling Box */
+.lab-announcements-box {
+    width: 100%;
+    height: 120px; /* Adjusted height */
+    overflow: hidden;
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Scrolling Content */
+.lab-announcements-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: scrollLabAnnouncements 7s linear infinite;
+}
+
+/* Links */
+.lab-announcement-link {
+    color: #00c6ff;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.lab-announcement-link:hover {
+    color: #ffcc00;
+    text-decoration: underline;
+}
+
+/* Keyframes for Scrolling Effect */
+@keyframes scrollLabAnnouncements {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
+}

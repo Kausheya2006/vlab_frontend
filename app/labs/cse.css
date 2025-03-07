@@ -1,0 +1,47 @@
+.cse-page {
+    display: flex;
+    height: 100vh;
+    background: #111;
+    color: #fff;
+  }
+  
+  /* Side Navbar */
+  .side-navbar {
+    width: 220px;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e1e1e, #333);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  
+  .nav-item {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #222;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 5px;
+  }
+  
+  .nav-item:hover,
+  .nav-item.active {
+    background: #ff5733;
+    transform: scale(1.05);
+  }
+  
+  /* Right Content Area */
+  .content-area {
+    margin-left: 240px;
+    padding: 40px;
+    width: 100%;
+  }
+  
