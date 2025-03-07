@@ -11,6 +11,7 @@ const ContactSection = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        
         if (entry.isIntersecting) {
           sectionRef.current.classList.add('visible');
         }
