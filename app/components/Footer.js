@@ -25,12 +25,12 @@ const Footer = () => {
     setInput(""); // 🛠️ **Clear input field after sending**
 
     try {
-      const response = await fetch("http://localhost:5001/api/chatbot/chat", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chatbot/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
+        
       });
-
       if (!response.ok) {
         throw new Error("Failed to fetch response from chatbot.");
       }

@@ -14,7 +14,7 @@ const Chatbot = ({ isVisible, onClose }) => {
 
     try {
       console.log("🔄 Sending request to chatbot...");
-      const response = await fetch("http://localhost:5001/api/chatbot/chat", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chatbot/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
