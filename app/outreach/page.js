@@ -30,7 +30,6 @@ const Outreach = () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`);
       if (!res.ok) throw new Error("Failed to fetch users");
       const data = await res.json();
-
       setUsers(data.users);
       setSortedUsers(data.users);
 

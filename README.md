@@ -43,8 +43,7 @@ Before you begin, ensure that you have the following installed:
    Create a .env.local file in the root directory of the project and add the following variables:
    ```
    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your-google-maps-api-key
-   API_KEY=your_google_api_key
-   SESSION_SECRET=your_session_secret_key
+   NEXT_PUBLIC_NEXT_PUBLIC_API_URL=your-backend-api
    MONGODB_URI=your-mongodb-connection-string
    ```
    

@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import "./cse.css"; // Custom styles for the page
 import { FiMenu, FiX } from "react-icons/fi";
+import LiveComments from "../components/LiveComments";
+
 
 // ⭐ Function to Render Stars Correctly
 const renderStars = (rating) => {
@@ -261,6 +263,9 @@ const CSEPage = () => {
       >
         {activeSection.content}
       </div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    </div>
+    <LiveComments/>
     </div>
   );
 };
