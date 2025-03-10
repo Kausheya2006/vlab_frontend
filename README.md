@@ -10,6 +10,9 @@
 - **Google Maps Integration**: Users can interact with a Google Map to find locations or resources easily.
 - **MongoDB Database**: The app is powered by a MongoDB database to store user data, lab information, and more.
 
+## Deployed URL 
+https://vlab-frontend-git-main-kausheya2006s-projects.vercel.app
+
 ## Installation
 
 Follow these steps to set up and run this project on your local machine.
