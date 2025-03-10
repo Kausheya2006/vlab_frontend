@@ -1,11 +1,13 @@
 "use client"
 import { useParams } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
-import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+import "./institutes.css"
 
 const InstitutePage = () => {
   const { name } = useParams()
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [activeInstitute, setActiveInstitute] = useState(null)
 
   // Dictionary for institutes and their labs
   const institutesData = {
@@ -207,136 +209,169 @@ const InstitutePage = () => {
         "Microwave Engineering Lab (New)",
       ],
     },
+    "iit-kanpur":{
+      name: "IIT Kanpur",
+      description: "Indian Institute of Technology Kanpur",
+      labs:[
+      "Electronics Lab",
+      "Aerospace Engineering Lab"]
+    }
   }
 
-  const institute = institutesData[name]
+  // If no parameter is provided, show all institutes
+  const allInstitutes = Object.keys(institutesData).map((key) => ({
+    id: key,
+    ...institutesData[key],
+  }))
 
-  if (!institute) {
-    return <p className="text-center text-2xl mt-10">Institute Not Found</p>
+  useEffect(() => {
+    // Simulate loading to ensure proper rendering
+    const timer = setTimeout(() => {
+      setIsLoaded(true)
+
+      // Force layout recalculation
+      window.dispatchEvent(new Event("resize"))
+    }, 100)
+
+    // Clean up the timer
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    // Function to adjust container height based on content
+    const adjustContainerHeight = () => {
+      const container = document.querySelector(".institute-content")
+      const labsList = document.querySelector(".labs-list")
+
+      if (container && labsList) {
+        // Reset any fixed height
+        container.style.height = "auto"
+
+        // Get the actual content height
+        const contentHeight = labsList.scrollHeight
+
+        // Set a minimum height but allow growth
+        container.style.minHeight = `${contentHeight + 150}px`
+      }
+    }
+
+    // Adjust on load and window resize
+    if (isLoaded) {
+      adjustContainerHeight()
+      window.addEventListener("resize", adjustContainerHeight)
+    }
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", adjustContainerHeight)
+    }
+  }, [isLoaded, name])
+
+  // Handle institute click
+  const handleInstituteClick = (institute) => {
+    setActiveInstitute(institute.id === activeInstitute ? null : institute.id)
   }
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        when: "beforeChildren",
-        staggerChildren: 0.1,
-      },
-    },
-  }
+  // If a specific institute is requested via URL parameter
+  if (name && institutesData[name]) {
+    const institute = institutesData[name]
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.4 },
-    },
-  }
-
-  const listItemVariants = {
-    hidden: { opacity: 0, x: -5 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.3 },
-    },
-  }
-
-  return (
-    <div className="min-h-screen bg-white py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-      <motion.div className="max-w-3xl mx-auto" initial="hidden" animate="visible" variants={containerVariants}>
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-          <div className="relative">
-            <div className="h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
-            <div className="p-4 sm:p-6 md:p-8">
-              <motion.h1
-                className="text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 pb-1 break-words"
-                variants={itemVariants}
-              >
-                {institute.name}
-              </motion.h1>
-
-              <motion.div
-                className="w-20 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mb-4"
-                variants={itemVariants}
-                initial={{ width: 0 }}
-                animate={{ width: 80, transition: { delay: 0.4, duration: 0.6 } }}
-              ></motion.div>
-
-              <motion.p
-                className="text-sm sm:text-base text-gray-600 mb-6 border-b border-gray-100 pb-6"
-                variants={itemVariants}
-              >
-                {institute.description}
-              </motion.p>
-
-              <motion.h2
-                className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-4 pl-3 border-l-4 border-blue-500"
-                variants={itemVariants}
-              >
-                Available Labs
-              </motion.h2>
-
-              <motion.ul
-                className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin"
-                variants={itemVariants}
-                style={{
-                  scrollbarWidth: "thin",
-                  scrollbarColor: "#3b82f6 #f3f4f6",
-                }}
-              >
-                {institute.labs.map((lab, index) => (
-                  <motion.li
-                    key={index}
-                    className="bg-gray-50 hover:bg-blue-50 rounded-lg border border-gray-100 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-y-[-2px]"
-                    variants={listItemVariants}
-                    custom={index}
-                    whileHover={{
-                      scale: 1.02,
-                      transition: { duration: 0.2 },
-                    }}
-                  >
-                    <Link
-                      href="/labs"
-                      className="flex justify-between items-center p-3 sm:p-4 text-sm sm:text-base text-gray-700 hover:text-blue-700 font-medium transition-colors duration-200"
-                    >
-                      <span className="flex-1 break-words pr-2">
-                        {lab.includes("(New)") ? (
-                          <span className="flex flex-wrap items-center gap-2">
-                            <span>{lab.replace(" (New)", "")}</span>
-                            <span className="px-2 py-0.5 text-xs font-semibold bg-blue-100 text-blue-700 rounded-full whitespace-nowrap">
-                              New
-                            </span>
-                          </span>
-                        ) : (
-                          lab
-                        )}
-                      </span>
-                      <span className="text-gray-400 text-sm">→</span>
-                    </Link>
-                  </motion.li>
-                ))}
-              </motion.ul>
-
-              <motion.div variants={itemVariants} className="flex justify-center sm:justify-start">
-                <Link
-                  href="/"
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 sm:py-2.5 px-4 sm:px-5 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] relative overflow-hidden group text-sm sm:text-base"
-                >
-                  <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-[-3px]" />
-                  <span>Back to Institutes</span>
-                  <div className="absolute inset-0 w-full h-full bg-white/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                </Link>
-              </motion.div>
-            </div>
+    return (
+      <div className={`institutes-page specific-institute ${isLoaded ? "loaded" : ""}`}>
+        <div className="institute-header">
+          <div className="header-content">
+            <h1>{institute.name}</h1>
+            <div className="header-divider"></div>
+            <p className="institute-description">{institute.description}</p>
           </div>
         </div>
-      </motion.div>
+
+        <div className="institute-content">
+          <h2>Available Labs</h2>
+          <ul className="labs-list">
+            {institute.labs.map((lab, index) => (
+              <li key={index} className="lab-item">
+                <Link href="/labs" className="lab-link">
+                  <span className="lab-name">
+                    {lab.includes("(New)") ? (
+                      <>
+                        {lab.replace(" (New)", "")}
+                        <span className="new-badge">New</span>
+                      </>
+                    ) : (
+                      lab
+                    )}
+                  </span>
+                  <span className="lab-arrow">→</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="back-button-container">
+            <Link href="/" className="back-button">
+              <span className="back-icon">←</span>
+              <span>Back to Institutes</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Background elements */}
+        <div className="bg-circle circle1"></div>
+        <div className="bg-circle circle2"></div>
+        <div className="bg-circle circle3"></div>
+      </div>
+    )
+  }
+
+  // Show all institutes if no specific one is requested
+  return (
+    <div className={`institutes-page all-institutes ${isLoaded ? "loaded" : ""}`}>
+      <div className="institutes-header">
+        <h1>Virtual Labs Institutes</h1>
+        <div className="header-divider"></div>
+        <p className="header-description">
+          Explore virtual labs from top educational institutions across India. Click on an institute to view its
+          available virtual labs.
+        </p>
+      </div>
+
+      <div className="institutes-grid">
+        {allInstitutes.map((institute) => (
+          <div
+            key={institute.id}
+            className={`institute-card ${activeInstitute === institute.id ? "active" : ""}`}
+            onClick={() => handleInstituteClick(institute)}
+          >
+            <div className="institute-card-header">
+              <h2>{institute.name}</h2>
+              <span className={`expand-icon ${activeInstitute === institute.id ? "active" : ""}`}>+</span>
+            </div>
+
+            <div className="institute-card-content">
+              <p>{institute.description}</p>
+              <div className="labs-count">
+                <span className="count-number">{institute.labs.length}</span>
+                <span className="count-text">Labs Available</span>
+              </div>
+
+              {activeInstitute === institute.id && (
+                <div className="institute-actions">
+                  <Link href={`/institutes/${institute.id}`} className="view-labs-button">
+                    View All Labs
+                    <span className="button-arrow">→</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Background elements */}
+      <div className="bg-circle circle1"></div>
+      <div className="bg-circle circle2"></div>
+      <div className="bg-circle circle3"></div>
     </div>
   )
 }

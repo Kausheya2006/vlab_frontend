@@ -98,9 +98,9 @@ const Navbar = () => {
             </div>
           </li>
           <li>
-            <a href="#" onClick={handleScrollToInstitutes} className="nav-link">
+            <Link href="#" onClick={handleScrollToInstitutes} className="nav-link">
               Participating Institutes
-            </a>
+            </Link>
           </li>
           <li>
             <Link

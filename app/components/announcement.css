@@ -1,74 +1,151 @@
-/* Announcements Container */
 .announcements-container {
-    background: linear-gradient(135deg, #ffffff, #f0f9ff);
+    background-color: white;
+    border-radius: 12px;
     padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    animation: fadeInUp 1s ease-in-out;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* Title Styling */
-.announcements-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #007bff;
-    margin-bottom: 1rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    animation: glow 1.5s infinite alternate;
-}
-
-/* Individual Announcement Card */
-.announcement-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 1.2rem;
-    margin: 10px 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    font-size: 1.1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .announcements-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .announcements-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+  }
+  
+  .announcements-title::before {
+    content: "📢";
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .announcements-badge {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
     font-weight: 500;
-}
-
-.announcement-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* Announcement Links */
-.announcement-link {
-    color: #007bff;
-    font-weight: bold;
+  }
+  
+  .announcements-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .announcement-card {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .announcement-card:hover {
+    background-color: #f1f5f9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .announcement-card.expanded {
+    background-color: #f1f5f9;
+  }
+  
+  .announcement-date {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+  }
+  
+  .announcement-content {
+    font-size: 0.9375rem;
+    color: #334155;
+    line-height: 1.5;
+  }
+  
+  .announcement-link {
+    color: #1a73e8;
+    font-weight: 500;
     text-decoration: none;
-    transition: color 0.3s ease-in-out;
-}
-
-.announcement-link:hover {
-    color: #ff4500;
+    transition: color 0.3s ease;
+  }
+  
+  .announcement-link:hover {
+    color: #0d47a1;
     text-decoration: underline;
-}
-
-/* Glow Animation */
-@keyframes glow {
-    from {
-        text-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
+  }
+  
+  .announcement-indicator {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e2e8f0;
+    color: #64748b;
+    border-radius: 50%;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  
+  .view-all-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a73e8;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background-color: #f1f5f9;
+    transition: all 0.3s ease;
+    margin-top: auto;
+  }
+  
+  .view-all-link:hover {
+    background-color: #e2e8f0;
+  }
+  
+  .arrow-icon {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .view-all-link:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+  
+  @media (max-width: 768px) {
+    .announcements-container {
+      padding: 1.5rem;
     }
-    to {
-        text-shadow: 0 0 15px rgba(0, 123, 255, 1);
+  
+    .announcements-title {
+      font-size: 1.25rem;
     }
-}
-
-/* Fade In Animation */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+  }
+  
+  

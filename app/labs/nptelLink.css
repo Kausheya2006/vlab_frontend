@@ -1,36 +1,191 @@
 /* NPTEL Link Container */
 .nptel-container {
+    position: relative;
     text-align: center;
-    margin-top: 20px;
-}
-
-/* NPTEL Link Styling */
-.nptel-link {
+    margin: 40px auto;
+    max-width: 800px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    overflow: hidden;
+  }
+  
+  .nptel-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .nptel-wrapper {
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* NPTEL Link Styling */
+  .nptel-link {
+    display: inline-flex;
+    align-items: center;
     font-size: 1.2rem;
     font-weight: bold;
     text-transform: uppercase;
     color: #ffcc00;
     text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    display: inline-block;
-    opacity: 0;  /* Initially hidden */
-    animation: blinkEffect 4s ease-in-out infinite;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-/* Hover Effect */
-.nptel-link:hover {
-    transform: scale(1.1);
-    color: #00c6ff;
-    text-shadow: 0px 0px 10px rgba(0, 198, 255, 0.8);
-}
-
-/* Blinking Animation */
-@keyframes blinkEffect {
-    0% { opacity: 0; }
-    25% { opacity: 1; }
-    50% { opacity: 1; }
-    75% { opacity: 0; }
-    100% { opacity: 0; }
-}
+    padding: 15px 25px;
+    border-radius: 50px;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3), 0 0 40px rgba(255, 204, 0, 0.1);
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .nptel-link::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+  }
+  
+  .nptel-link.hovered::before {
+    left: 100%;
+  }
+  
+  .nptel-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    color: #ffcc00;
+    animation: pulse 2s infinite ease-in-out;
+  }
+  
+  .nptel-text {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .nptel-arrow {
+    width: 20px;
+    height: 20px;
+    margin-left: 12px;
+    transition: transform 0.3s ease;
+    color: #ffcc00;
+  }
+  
+  /* Hover Effect */
+  .nptel-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.5), 0 0 60px rgba(255, 204, 0, 0.2);
+    color: #ffffff;
+    background: rgba(30, 41, 59, 0.9);
+  }
+  
+  .nptel-link:hover .nptel-arrow {
+    transform: translateX(5px);
+  }
+  
+  /* Particles Animation */
+  .nptel-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .particle {
+    position: absolute;
+    bottom: 0;
+    left: var(--left);
+    width: var(--size);
+    height: var(--size);
+    background: rgba(255, 204, 0, 0.6);
+    border-radius: 50%;
+    animation: float var(--duration) ease-in infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+  }
+  
+  /* Animations */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+  }
+  
+  /* Blinking Animation (modified to be more subtle) */
+  @keyframes blinkEffect {
+    0% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.8;
+    }
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .nptel-link {
+      font-size: 1rem;
+      padding: 12px 20px;
+    }
+  
+    .nptel-icon,
+    .nptel-arrow {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .nptel-link {
+      font-size: 0.9rem;
+      padding: 10px 15px;
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .nptel-icon {
+      margin-right: 0;
+    }
+  
+    .nptel-arrow {
+      margin-left: 0;
+    }
+  }
+  
+  

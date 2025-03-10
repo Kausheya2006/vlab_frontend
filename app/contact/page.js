@@ -135,7 +135,7 @@ const Contact = () => {
 
   return (
     <div
-      className="contact-container"
+      className="contact-container mt-20"
       style={{
         "--mouse-x": `${mousePosition.x}px`,
         "--mouse-y": `${mousePosition.y}px`,

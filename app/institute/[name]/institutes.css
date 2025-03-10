@@ -1,0 +1,641 @@
+/* Base Styles */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+.institutes-page {
+  max-height: 200vh;
+  background: linear-gradient(135deg, #0a1128, #1c2541);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  padding: 80px 20px 40px;
+  position: relative;
+  overflow: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+  contain: content;
+}
+
+.institutes-page.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Background Circles */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+  opacity: 0.4;
+  filter: blur(60px);
+}
+
+.circle1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(41, 128, 185, 0.3) 0%, rgba(41, 128, 185, 0) 70%);
+  top: -200px;
+  right: -200px;
+  animation: float 15s infinite alternate ease-in-out;
+}
+
+.circle2 {
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(142, 68, 173, 0.2) 0%, rgba(142, 68, 173, 0) 70%);
+  bottom: -300px;
+  left: -300px;
+  animation: float 20s infinite alternate-reverse ease-in-out;
+}
+
+.circle3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(39, 174, 96, 0.2) 0%, rgba(39, 174, 96, 0) 70%);
+  top: 40%;
+  right: 10%;
+  animation: float 18s infinite alternate ease-in-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+  100% {
+    transform: translate(-30px, 30px) scale(0.95);
+  }
+}
+
+/* All Institutes Page */
+.institutes-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px;
+  padding-top: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.institutes-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header-divider {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  margin: 0 auto 20px;
+  border-radius: 2px;
+}
+
+.header-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.institutes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  flex-grow:1;
+}
+
+.institute-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+}
+
+.institute-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.institute-card.active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.institute-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.institute-card:hover::before,
+.institute-card.active::before {
+  transform: scaleX(1);
+}
+
+.institute-card-header {
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.institute-card-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.expand-icon {
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: all 0.3s ease;
+}
+
+.expand-icon.active {
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #3498db, #9b59b6);
+}
+
+.institute-card-content {
+  padding: 20px 25px;
+}
+
+.institute-card-content p {
+  margin: 0 0 20px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.labs-count {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.count-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-right: 15px;
+}
+
+.count-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.institute-actions {
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.view-labs-button {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.view-labs-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.view-labs-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+.view-labs-button:hover::before {
+  transform: translateX(100%);
+}
+
+.button-arrow {
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+.view-labs-button:hover .button-arrow {
+  transform: translateX(5px);
+}
+
+/* Specific Institute Page */
+.specific-institute {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 100vh;
+  height: auto;
+}
+
+.institute-header {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.header-content {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.institute-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.institute-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.institute-content {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: auto;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.institute-content h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #fff;
+  position: relative;
+  padding-left: 15px;
+  flex-shrink: 0;
+}
+
+.institute-content h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  background: linear-gradient(180deg, #3498db, #9b59b6);
+  border-radius: 3px;
+}
+
+.labs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+  max-height: none;
+  overflow-y: visible;
+  padding-right: 10px;
+}
+
+.labs-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.labs-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.labs-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3498db, #9b59b6);
+  border-radius: 4px;
+}
+
+.lab-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lab-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.lab-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.lab-link:hover {
+  color: #fff;
+}
+
+.lab-name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.new-badge {
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.lab-arrow {
+  font-size: 1.2rem;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.lab-link:hover .lab-arrow {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+.back-button-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.back-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.back-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+.back-button:hover::before {
+  transform: translateX(100%);
+}
+
+.back-icon {
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover .back-icon {
+  transform: translateX(-5px);
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .institutes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .institutes-page {
+    padding: 80px 15px 30px;
+  }
+
+  .institutes-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .institutes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .labs-list {
+    grid-template-columns: 1fr;
+  }
+
+  .institute-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .institutes-header h1 {
+    font-size: 2rem;
+  }
+
+  .header-description {
+    font-size: 1rem;
+  }
+
+  .institute-card-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .count-number {
+    font-size: 2rem;
+  }
+
+  .institute-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .institute-content h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Animation for page transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fix for rendering issues */
+html,
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure proper loading of resources */
+img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+video,
+audio {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ensure animations work properly */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fix for rendering issues between page transitions */
+.institutes-page {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+.institutes-page * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure proper stacking context */
+.institutes-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix for rendering issues */
+.institute-content {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: auto;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fix for Next.js image components */
+span[style*="box-sizing: border-box"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+

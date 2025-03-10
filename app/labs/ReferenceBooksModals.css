@@ -1,66 +1,253 @@
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  
-  .modal-content {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 12px;
-    width: 400px;
-    color: white;
-    text-align: center;
-    box-shadow: 0 0 15px rgba(0, 198, 255, 0.7);
-    transform: scale(0.9);
-    animation: scaleUp 0.3s ease-in-out forwards;
-  }
-  
-  .modal-content h2 {
-    margin-bottom: 10px;
-    font-size: 20px;
-    text-shadow: 0 0 5px rgba(0, 198, 255, 0.8);
-  }
-  
-  .modal-content ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .modal-content li {
-    margin: 10px 0;
-    font-size: 16px;
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 22px;
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  @keyframes scaleUp {
-    from { transform: scale(0.9); }
-    to { transform: scale(1); }
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+  backdrop-filter: blur(8px);
+}
 
+.modal-content {
+  position: relative;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(0, 198, 255, 0.3);
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  color: white;
+  box-shadow: 
+    0 0 25px rgba(0, 198, 255, 0.5),
+    0 0 50px rgba(0, 198, 255, 0.2);
+  transform: scale(0.9);
+  animation: scaleUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 198, 255, 0.3);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.close-btn:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  margin-bottom: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 198, 255, 0.5);
+  border-radius: 10px;
+}
+
+.books-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.book-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  animation: slideIn 0.5s ease forwards;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.book-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-left-color: #00c6ff;
+  transform: translateX(5px);
+}
+
+.book-icon {
+  margin-right: 12px;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0, 198, 255, 0.3);
+}
+
+.modal-action-btn {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 198, 255, 0.3);
+}
+
+.modal-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
+}
+
+.modal-decoration {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(0, 198, 255, 0.3) 0%, rgba(0, 198, 255, 0) 70%);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.top-left {
+  top: -50px;
+  left: -50px;
+}
+
+.top-right {
+  top: -50px;
+  right: -50px;
+}
+
+.bottom-left {
+  bottom: -50px;
+  left: -50px;
+}
+
+.bottom-right {
+  bottom: -50px;
+  right: -50px;
+}
+
+.fade-out {
+  animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+.scale-down {
+  animation: scaleDown 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes scaleDown {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(0.9); opacity: 0; }
+}
+
+@keyframes slideIn {
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Apply staggered animation to book items */
+.book-item:nth-child(1) { animation-delay: 0.1s; }
+.book-item:nth-child(2) { animation-delay: 0.2s; }
+.book-item:nth-child(3) { animation-delay: 0.3s; }
+.book-item:nth-child(4) { animation-delay: 0.4s; }
+.book-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
   
+  .modal-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .book-item {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 15px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .book-item {
+    flex-direction: column;
+  }
+  
+  .book-icon {
+    margin-bottom: 8px;
+  }
+}

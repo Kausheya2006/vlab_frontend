@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
 import Link from "next/link"; // Import Link
+import { FiExternalLink } from "react-icons/fi"; // Import React Icon
 
 const Institutes = () => {
   const institutes = [
@@ -34,7 +35,16 @@ const Institutes = () => {
   };
 
   return (
-    <div id="institutes-section" className="py-12 px-12 relative bg-gray-50 mb-12">
+    <div id="institutes-section" className="py-6 px-12 relative bg-gray-50 mb-12">
+      {/* View All Button */}
+      <div className="absolute top-8 right-6">
+        <Link href="/institute/all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300">
+            View All <FiExternalLink className="text-lg" />
+          </button>
+        </Link>
+      </div>
+
       <h2 className="text-5xl font-extrabold text-gray-700 tracking-tight text-center mb-8">
         Participating Institutes
       </h2>

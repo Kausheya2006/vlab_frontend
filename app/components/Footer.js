@@ -1,553 +1,352 @@
-"use client";
-
-import React, { useState, useRef } from "react";
+'use client';
+import Link from "next/link"
 
 const Footer = () => {
-  const [showChatbot, setShowChatbot] = useState(false);
-  const [messages, setMessages] = useState([
-    { text: "Welcome! How can I help you?", isBot: true },
-  ]);
-  const [input, setInput] = useState("");
-  const [isListening, setIsListening] = useState(false);
-  const recognitionRef = useRef(null);
-  let silenceTimeout = useRef(null);
-
-  const toggleChatbot = () => {
-    setShowChatbot(!showChatbot);
-  };
-
-  const sendMessage = async (message) => {
-    if (!message.trim()) return;
-
-    const userMessage = { text: message, isBot: false };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
-
-    setInput(""); // 🛠️ **Clear input field after sending**
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chatbot/chat`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
-        
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch response from chatbot.");
-      }
-
-      const data = await response.json();
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: data.response, isBot: true },
-      ]);
-    } catch (error) {
-      console.error("Error communicating with chatbot:", error);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: "Error reaching server. Try again later.", isBot: true },
-      ]);
-    }
-  };
-
-  const startListening = () => {
-    if (isListening) {
-      stopListening();
-      return;
-    }
-
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Speech recognition not supported in this browser.");
-      return;
-    }
-
-    recognitionRef.current = new SpeechRecognition();
-    recognitionRef.current.lang = "en-US";
-    recognitionRef.current.continuous = false;
-    recognitionRef.current.interimResults = false;
-
-    recognitionRef.current.onstart = () => {
-      setIsListening(true);
-      console.log("Listening...");
-    };
-
-    recognitionRef.current.onresult = (event) => {
-      const speechResult = event.results[0][0].transcript.toLowerCase();
-      console.log("Recognized:", speechResult);
-
-      sendMessage(speechResult); // Send message automatically
-      stopListening();
-    };
-
-    recognitionRef.current.onerror = (event) => {
-      console.error("Speech recognition error:", event.error);
-      stopListening();
-    };
-
-    recognitionRef.current.onend = () => {
-      stopListening();
-    };
-
-    recognitionRef.current.start();
-
-    // Stop listening after 5 seconds if no speech is detected
-    silenceTimeout.current = setTimeout(() => {
-      stopListening();
-    }, 5000);
-  };
-
-  const stopListening = () => {
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-    }
-    clearTimeout(silenceTimeout.current);
-    setIsListening(false);
-    console.log("Stopped listening.");
-  };
+  const currentYear = new Date().getFullYear()
 
   return (
-    <div>
-      <footer className="bg-gray-100 dark:bg-gray-800 py-6 relative">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                About Us
-              </h2>
-              <ul className="text-gray-600 dark:text-gray-300">
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Overview
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Mission & Vision
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Government Leadership
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Reports & Publications
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Citizen Services
-              </h2>
-              <ul className="text-gray-600 dark:text-gray-300">
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Online Services
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Forms & Applications
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Contact Us
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Feedback & Suggestions
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Legal Information
-              </h2>
-              <ul className="text-gray-600 dark:text-gray-300">
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Terms of Service
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Accessibility
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:underline">
-                    Cookie Policy
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Follow Us
-              </h2>
-              <ul className="flex space-x-4">
-                {/* Facebook */}
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-600 dark:text-gray-300 hover:text-blue-500"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M22 12.07C22 6.48 17.52 2 12 2S2 6.48 2 12.07C2 17.09 5.66 21.14 10.44 22V14.89H7.9v-2.82h2.54V9.79c0-2.5 1.5-3.87 3.79-3.87 1.1 0 2.25.19 2.25.19v2.48h-1.27c-1.25 0-1.64.78-1.64 1.58v1.89h2.79l-.45 2.82h-2.34V22C18.34 21.14 22 17.09 22 12.07z" />
-                    </svg>
-                  </a>
-                </li>
-
-                {/* Twitter (X) */}
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-600 dark:text-gray-300 hover:text-blue-400"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M23 3a10.9 10.9 0 01-3.14 1A4.48 4.48 0 0012 8v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
-                    </svg>
-                  </a>
-                </li>
-
-                {/* Instagram */}
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-600 dark:text-gray-300 hover:text-pink-500"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M7.5 2h9A5.5 5.5 0 0122 7.5v9A5.5 5.5 0 0116.5 22h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2zm0-2A7.5 7.5 0 000 7.5v9A7.5 7.5 0 007.5 24h9A7.5 7.5 0 0024 16.5v-9A7.5 7.5 0 0016.5 0h-9zM12 6.5A5.5 5.5 0 106.5 12 5.5 5.5 0 0012 6.5zm0-2A7.5 7.5 0 104.5 12 7.5 7.5 0 0012 4.5zm5.5.5a1.5 1.5 0 11-1.5 1.5 1.5 1.5 0 011.5-1.5z" />
-                    </svg>
-                  </a>
-                </li>
-
-                {/* YouTube */}
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-600 dark:text-gray-300 hover:text-red-500"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M23.5 6.5a3 3 0 00-2.1-2.1C19 4 12 4 12 4s-7 0-9.4.4a3 3 0 00-2.1 2.1A31 31 0 000 12a31 31 0 00.5 5.5 3 3 0 002.1 2.1C5 20 12 20 12 20s7 0 9.4-.4a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.5zM9.75 15.75v-7.5L16 12l-6.25 3.75z" />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              © Created by Pickles 2025 with ❤️. All Rights Reserved. <br />
-              <a href="/terms-of-service" className="hover:underline">
-                Terms of Service
-              </a>{" "}
-              |
-              <a href="/privacy-policy" className="hover:underline">
-                Privacy Policy
-              </a>
-            </p>
-          </div>
-        </div>
-      </footer>
-
-      <button
-        onClick={toggleChatbot}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-xl chatbot-button hover:bg-blue-700 transition-transform transform hover:scale-110 focus:outline-none"
-      >
-        💬
-      </button>
-
-      {showChatbot && (
-        <div className="fixed bottom-16 right-6 w-96 h-[450px] chatbot-container shadow-2xl border border-gray-300 dark:border-gray-700 flex flex-col">
-          <div className="flex justify-between items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white p-3 rounded-t-lg shadow-lg">
-            <span className="font-semibold text-lg">Chat Support</span>
-            <button
-              onClick={toggleChatbot}
-              className="text-xl hover:text-gray-300 transition transform hover:rotate-90"
-            >
-              ✖
-            </button>
-          </div>
-
-          <div className="p-4 flex-1 overflow-y-auto space-y-3 custom-scrollbar chat-container">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`relative p-4 max-w-[75%] rounded-xl text-sm shadow-lg transition-opacity duration-300 ${
-                  msg.isBot
-                    ? "bg-blue-100 text-gray-900 bot-reply"
-                    : "bg-blue-500 text-white self-end ml-auto user-message"
-                }`}
-              >
-                {msg.text}
+    <footer className="footer">
+      <div className="footer-top">
+        <div className="container">
+          <div className="footer-grid">
+            <div className="footer-column">
+              <div className="footer-logo">
+                <img src="/vlead_icon.jpg" alt="Virtual Labs Logo" className="footer-logo-img" />
+                <div className="footer-logo-text">
+                  <h3 className="footer-logo-title">Virtual Labs</h3>
+                  <p className="footer-logo-subtitle">Ministry of Education, Govt. of India</p>
+                </div>
               </div>
-            ))}
-          </div>
+              <p className="footer-description">
+                Providing remote-access to simulation-based Labs in various disciplines of Science and Engineering.
+              </p>
+              <div className="footer-social">
+                <a href="#" className="social-link" aria-label="Facebook">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  </svg>
+                </a>
+                <a href="#" className="social-link" aria-label="Twitter">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                  </svg>
+                </a>
+                <a href="#" className="social-link" aria-label="YouTube">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                  </svg>
+                </a>
+              </div>
+            </div>
 
-          <div className="flex items-center p-3 border-t bg-gray-100 dark:bg-gray-800">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="flex-1 p-3 border rounded-lg text-sm dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none shadow-inner"
-              placeholder="Type a message..."
-            />
-            <button
-              onClick={() => sendMessage(input)}
-              className="ml-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg send-button"
-            >
-              Send
-            </button>
-            <button
-              onClick={startListening}
-              className={`ml-2 p-3 rounded-full text-white transition-transform transform ${
-                isListening ? "bg-red-500" : "bg-green-500"
-              } hover:scale-110`}
-            >
-              🎤
-            </button>
+            <div className="footer-column">
+              <h3 className="footer-heading">Quick Links</h3>
+              <ul className="footer-links">
+                <li>
+                  <Link href="/">Home</Link>
+                </li>
+                <li>
+                  <Link href="/about">About Us</Link>
+                </li>
+                <li>
+                  <Link href="/labs">All Labs</Link>
+                </li>
+                <li>
+                  <Link href="/contact">Contact</Link>
+                </li>
+                <li>
+                  <Link href="/outreach">Outreach</Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="footer-column">
+              <h3 className="footer-heading">Lab Categories</h3>
+              <ul className="footer-links">
+                <li>
+                  <Link href="/cse">Computer Science</Link>
+                </li>
+                <li>
+                  <Link href="/labs">Electronics & Communications</Link>
+                </li>
+                <li>
+                  <Link href="/labs">Mechanical Engineering</Link>
+                </li>
+                <li>
+                  <Link href="/labs">Civil Engineering</Link>
+                </li>
+                <li>
+                  <Link href="/labs">Biotechnology</Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="footer-column">
+              <h3 className="footer-heading">Contact Us</h3>
+              <address className="footer-contact">
+                <p>
+                  <span className="contact-icon">📍</span>
+                  Virtual Labs, Ministry of Education
+                </p>
+                <p>
+                  <span className="contact-icon">📧</span>
+                  <a href="mailto:support@vlabs.ac.in">support@vlabs.ac.in</a>
+                </p>
+                <p>
+                  <span className="contact-icon">📞</span>
+                  +91-11-2659-1201
+                </p>
+              </address>
+            </div>
           </div>
         </div>
-      )}
-      <style jsx>
-        {`
-          /* Custom Scrollbar */
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: #e0e0e0;
-            border-radius: 10px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            transition: background 0.3s ease-in-out;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 0.5);
-          }
+      </div>
 
-          /* Chatbot Container Background */
-          .chatbot-container {
-            backdrop-filter: blur(10px);
-            background: url("https://source.unsplash.com/500x500/?technology,abstract");
-            background-size: cover;
-            background-position: center;
-            border-radius: 15px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            transition: transform 0.3s ease-in-out;
-          }
-          .chatbot-container:hover {
-            transform: scale(1.02);
-          }
+      <div className="footer-bottom">
+        <div className="container">
+          <div className="footer-bottom-content">
+            <p className="copyright">
+              &copy; {currentYear} Virtual Labs. All Rights Reserved. Ministry of Education, Government of India.
+            </p>
+            <div className="footer-bottom-links">
+              <Link href="/privacy-policy">Privacy Policy</Link>
+              <Link href="/terms">Terms of Use</Link>
+              <Link href="/sitemap">Sitemap</Link>
+            </div>
+          </div>
+        </div>
+      </div>
 
-          /* Chatbot Header */
-          .chatbot-container .chatbot-header {
-            background: linear-gradient(45deg, #2563eb, #1e40af);
-            color: white;
-            padding: 12px;
-            font-weight: bold;
-            text-align: center;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      <style jsx>{`
+        .footer {
+          background-color: #1e293b;
+          color: #f8fafc;
+        }
+        
+        .footer-top {
+          padding: 4rem 0 3rem;
+        }
+        
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+        }
+        
+        .footer-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+        }
+        
+        .footer-column {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .footer-logo {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+        
+        .footer-logo-img {
+          width: 48px;
+          height: 48px;
+          margin-right: 1rem;
+        }
+        
+        .footer-logo-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin: 0;
+          color: white;
+        }
+        
+        .footer-logo-subtitle {
+          font-size: 0.75rem;
+          margin: 0;
+          color: #cbd5e1;
+        }
+        
+        .footer-description {
+          color: #cbd5e1;
+          margin-bottom: 1.5rem;
+          line-height: 1.6;
+        }
+        
+        .footer-social {
+          display: flex;
+          gap: 1rem;
+        }
+        
+        .social-link {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          background-color: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+          color: white;
+          transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+          background-color: #1a73e8;
+          transform: translateY(-3px);
+        }
+        
+        .footer-heading {
+          font-size: 1.125rem;
+          font-weight: 600;
+          margin-bottom: 1.5rem;
+          color: white;
+          position: relative;
+          padding-bottom: 0.75rem;
+        }
+        
+        .footer-heading::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 40px;
+          height: 2px;
+          background-color: #1a73e8;
+        }
+        
+        .footer-links {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        
+        .footer-links li {
+          margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+          color: #cbd5e1;
+          text-decoration: none;
+          transition: color 0.3s ease;
+          display: inline-block;
+        }
+        
+        .footer-links a:hover {
+          color: white;
+          transform: translateX(3px);
+        }
+        
+        .footer-contact p {
+          display: flex;
+          align-items: flex-start;
+          margin-bottom: 1rem;
+          color: #cbd5e1;
+        }
+        
+        .contact-icon {
+          margin-right: 0.75rem;
+        }
+        
+        .footer-contact a {
+          color: #cbd5e1;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        
+        .footer-contact a:hover {
+          color: white;
+        }
+        
+        .footer-bottom {
+          background-color: rgba(0, 0, 0, 0.2);
+          padding: 1.5rem 0;
+        }
+        
+        .footer-bottom-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+        
+        .copyright {
+          color: #94a3b8;
+          font-size: 0.875rem;
+          margin: 0;
+        }
+        
+        .footer-bottom-links {
+          display: flex;
+          gap: 1.5rem;
+        }
+        
+        .footer-bottom-links a {
+          color: #94a3b8;
+          font-size: 0.875rem;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        
+        .footer-bottom-links a:hover {
+          color: white;
+        }
+        
+        @media (max-width: 768px) {
+          .footer-top {
+            padding: 3rem 0 2rem;
           }
-
-          /* Chatbot Button */
-          .chatbot-button {
-            transition: all 0.3s ease-in-out;
+          
+          .footer-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           }
-          .chatbot-button:hover {
-            transform: scale(1.1);
-          }
-
-          /* Bot Reply Styling */
-          .bot-reply {
-            background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
-            background-size: cover;
-            border-left: 5px solid #2563eb;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.3s ease-in-out;
-            padding: 10px;
-            border-radius: 10px;
-          }
-
-          /* User Message Styling */
-          .user-message {
-            background-color: #007bff; /* Solid blue */
-            color: white;
-            font-weight: bold;
-            padding: 12px;
-            border-radius: 10px;
-            border-right: 5px solid #4caf50;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.3s ease-in-out;
-
-            max-width: 75%; /* Ensures bubble width does not exceed 75% of chat container */
-            word-wrap: break-word; /* Wraps long words */
-            white-space: normal; /* Allows text to wrap to the next line */
-            overflow-wrap: break-word; /* Ensures breaking of long words */
-          }
-
-          /* Message Animation */
-          @keyframes fadeIn {
-            from {
-              opacity: 0;
-              transform: translateY(5px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          /* Send Button Animation */
-          .send-button {
-            transition: all 0.2s ease-in-out;
-          }
-          .send-button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #2563eb, #1e40af);
-          }
-
-          /* Input Field Styling */
-          .chat-input {
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            transition: all 0.2s ease-in-out;
-          }
-          .chat-input:focus {
-            background: white;
-            box-shadow: 0px 0px 5px rgba(0, 0, 255, 0.5);
-          }
-
-          /* Chatbox Area */
-          .chatbox-area {
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 10px;
-            padding: 12px;
-            box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
-            overflow-y: auto;
-            max-height: 350px;
-          }
-
-          /* Typing Effect */
-          .typing-indicator {
-            display: flex;
-            align-items: center;
-          }
-          .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            margin: 0 3px;
-            background: #2563eb;
-            border-radius: 50%;
-            animation: typing 1.5s infinite ease-in-out;
-          }
-          .typing-indicator span:nth-child(1) {
-            animation-delay: 0s;
-          }
-          .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-          }
-          .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-          }
-          @keyframes typing {
-            0%,
-            100% {
-              transform: scale(1);
-              opacity: 0.3;
-            }
-            50% {
-              transform: scale(1.3);
-              opacity: 1;
-            }
-          }
-
-          /* Chatbot Close Button */
-          .chatbot-close {
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 5px;
-            font-size: 16px;
-            transition: all 0.2s ease-in-out;
-          }
-          .chatbot-close:hover {
-            transform: scale(1.2);
-            background: darkred;
-          }
-
-          /* Dark Mode Enhancements */
-          @media (prefers-color-scheme: dark) {
-            .chatbot-container {
-              background: rgba(30, 30, 30, 0.8);
-              color: white;
-            }
-            .bot-reply {
-              background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");
-            }
-            .user-message {
-              background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
-            }
-            .chat-input {
-              background: rgba(50, 50, 50, 0.6);
-              color: white;
-            }
-          }
-          .chat-container {
-            background-image: url("/chatbot_img.jpg"); /* Replace with your actual image path */
-            background-size: cover; /* Ensures the image covers the full area */
-            background-position: center;
-            background-repeat: no-repeat;
-            width: 100%;
-            height: 100vh; /* Ensures it fills the entire screen */
-            display: flex;
+          
+          .footer-bottom-content {
             flex-direction: column;
-            padding: 10px;
+            text-align: center;
           }
-        `}
-      </style>
-    </div>
-  );
-};
+          
+          .footer-bottom-links {
+            justify-content: center;
+          }
+        }
+      `}</style>
+    </footer>
+  )
+}
 
-export default Footer;
+export default Footer
+

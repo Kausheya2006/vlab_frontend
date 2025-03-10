@@ -14,7 +14,7 @@ const broadAreas = [
 
 const BroadAreasSection = () => {
   return (
-    <div className="mt-32 my-12">
+    <div className="mt-16 my-12">
       <h2 className="text-5xl font-extrabold text-gray-900 text-center mb-8 animate-fade-in">
         Broad Areas of Virtual Labs
       </h2>
