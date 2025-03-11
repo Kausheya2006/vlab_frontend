@@ -204,7 +204,7 @@ const sections = [
         <div className="content-body">
           <div className="experiments-container">
           <div className="experiment-card">
-              <div className="experiment-number">01</div>
+              <div className="experiment-number">00</div>
               <div className="experiment-content">
                 <h3>Interactive Lab Demo</h3>
                 <p>Drag and move the box around to test interactive elements in the lab environment.</p>
