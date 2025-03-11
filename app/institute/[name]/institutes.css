@@ -302,6 +302,7 @@
   margin: 0 auto;
   min-height: 100vh;
   height: auto;
+  padding-bottom: 50px;
 }
 
 .institute-header {
@@ -347,10 +348,12 @@
   padding: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  height: auto;
+  height: auto !important;
   min-height: 300px;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  overflow: visible;
 }
 
 .institute-content h2 {
@@ -382,10 +385,11 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 15px;
   max-height: none;
-  overflow-y: visible;
+  overflow: visible;
   padding-right: 10px;
   width: 100%;
   align-items: stretch;
+  height: auto;
 }
 
 .labs-list::-webkit-scrollbar {
@@ -639,10 +643,12 @@ audio {
   padding: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  height: auto;
+  height: auto !important;
   min-height: 300px;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  overflow: visible;
 }
 
 /* Fix for Next.js image components */

@@ -247,30 +247,26 @@ const InstitutePage = () => {
       const labsList = document.querySelector(".labs-list");
 
       if (container && labsList) {
-        // Reset any fixed height
+        // Force the container to auto height first
         container.style.height = "auto";
 
-        // Get the number of labs
-        const labItems = labsList.querySelectorAll(".lab-item");
-        const labCount = labItems.length;
+        // Get the labs list height
+        const labsHeight = labsList.scrollHeight;
 
-        // Calculate grid columns based on screen width
-        const screenWidth = window.innerWidth;
-        let columns = 1;
-        if (screenWidth >= 768) {
-          columns = Math.floor(screenWidth / 350);
-          columns = Math.min(columns, 3); // Cap at 3 columns max
-        }
+        // Set the container height to accommodate all content with extra padding
+        const totalHeight = labsHeight + 150; // Add padding for header and button
 
-        // Calculate rows needed (round up)
-        const rows = Math.ceil(labCount / columns);
+        // Set a minimum height but ensure it's at least as tall as needed
+        container.style.minHeight = `${Math.max(totalHeight, 500)}px`;
 
-        // Set grid-template-rows to ensure equal height
-        labsList.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+        // Explicitly set the height to ensure all content is visible
+        document.querySelector(".specific-institute").style.minHeight = `${
+          totalHeight + 200
+        }px`;
 
-        // Set a minimum height but allow growth
-        // Add extra padding based on row count
-        container.style.minHeight = `${rows * 70 + 200}px`;
+        // Remove any max-height constraints that might be limiting the content
+        labsList.style.maxHeight = "none";
+        container.style.maxHeight = "none";
       }
     };
 
