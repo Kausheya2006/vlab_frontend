@@ -357,7 +357,7 @@ const InstitutePage = () => {
 
               {activeInstitute === institute.id && (
                 <div className="institute-actions">
-                  <Link href={`/institutes/${institute.id}`} className="view-labs-button">
+                  <Link href={`/institute/${institute.id}`} className="view-labs-button">
                     View All Labs
                     <span className="button-arrow">→</span>
                   </Link>
