@@ -33,7 +33,11 @@
 .circle1 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(41, 128, 185, 0.3) 0%, rgba(41, 128, 185, 0) 70%);
+  background: radial-gradient(
+    circle,
+    rgba(41, 128, 185, 0.3) 0%,
+    rgba(41, 128, 185, 0) 70%
+  );
   top: -200px;
   right: -200px;
   animation: float 15s infinite alternate ease-in-out;
@@ -42,7 +46,11 @@
 .circle2 {
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(142, 68, 173, 0.2) 0%, rgba(142, 68, 173, 0) 70%);
+  background: radial-gradient(
+    circle,
+    rgba(142, 68, 173, 0.2) 0%,
+    rgba(142, 68, 173, 0) 70%
+  );
   bottom: -300px;
   left: -300px;
   animation: float 20s infinite alternate-reverse ease-in-out;
@@ -51,7 +59,11 @@
 .circle3 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(39, 174, 96, 0.2) 0%, rgba(39, 174, 96, 0) 70%);
+  background: radial-gradient(
+    circle,
+    rgba(39, 174, 96, 0.2) 0%,
+    rgba(39, 174, 96, 0) 70%
+  );
   top: 40%;
   right: 10%;
   animation: float 18s infinite alternate ease-in-out;
@@ -112,7 +124,7 @@
   margin: 0 auto;
   position: relative;
   z-index: 1;
-  flex-grow:1;
+  flex-grow: 1;
 }
 
 .institute-card {
@@ -372,6 +384,8 @@
   max-height: none;
   overflow-y: visible;
   padding-right: 10px;
+  width: 100%;
+  align-items: stretch;
 }
 
 .labs-list::-webkit-scrollbar {
@@ -394,6 +408,8 @@
   overflow: hidden;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 100%;
+  display: flex;
 }
 
 .lab-item:hover {
@@ -410,10 +426,7 @@
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   transition: color 0.3s ease;
-}
-
-.lab-link:hover {
-  color: #fff;
+  width: 100%;
 }
 
 .lab-name {
@@ -639,3 +652,29 @@ span[style*="box-sizing: border-box"] {
   opacity: 1 !important;
 }
 
+/* Fix for white background in desktop view */
+@media (min-width: 768px) {
+  body,
+  html {
+    background: linear-gradient(135deg, #0a1128, #1c2541);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  #__next,
+  main {
+    background: transparent;
+    min-height: 100vh;
+  }
+}
+
+/* Ensure labs have equal heights */
+@media (min-width: 768px) {
+  .labs-list {
+    display: grid;
+    grid-auto-rows: 1fr;
+  }
+}

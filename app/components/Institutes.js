@@ -1,22 +1,66 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import confetti from "canvas-confetti";
 import Link from "next/link"; // Import Link
 import { FiExternalLink } from "react-icons/fi"; // Import React Icon
 
 const Institutes = () => {
   const institutes = [
-    { name: "IIIT Hyderabad", logo: "iiitH.png", fact: "Pioneers in AI & Blockchain." },
-    { name: "IIT Bombay", logo: "iitbombay.png", fact: "Home to Asia's largest Techfest." },
-    { name: "IIT Roorkee", logo: "roorkee.png", fact: "One of the oldest tech institutes in Asia." },
-    { name: "IIT Kanpur", logo: "kanpur.png", fact: "Known for cutting-edge robotics research." },
-    { name: "NITK Surathkal", logo: "nitk.png", fact: "Only NIT with a private beach!" },
-    { name: "IIT Guwahati", logo: "iitguwahati.png", fact: "India's most beautiful campus!" },
-    { name: "IIT Kharagpur", logo: "iitkgp.png", fact: "Has its own railway station inside the campus." },
-    { name: "COEP Technological University Pune", logo: "coep.png", fact: "Oldest engineering college in India." },
-    { name: "IIT Delhi", logo: "delhi.png", fact: "Produces the highest number of startup founders." },
-    { name: "Dayalbagh Educational Institute", logo: "dayalbagh.png", fact: "Focuses on holistic education & sustainability." },
-    { name: "Amrita Vishwa Vidyapeetham", logo: "amritha.png", fact: "Leads in humanitarian robotics projects." },
+    {
+      name: "IIIT Hyderabad",
+      logo: "iiitH.png",
+      fact: "Pioneers in AI & Blockchain.",
+    },
+    {
+      name: "IIT Bombay",
+      logo: "iitbombay.png",
+      fact: "Home to Asia's largest Techfest.",
+    },
+    {
+      name: "IIT Roorkee",
+      logo: "roorkee.png",
+      fact: "One of the oldest tech institutes in Asia.",
+    },
+    {
+      name: "IIT Kanpur",
+      logo: "kanpur.png",
+      fact: "Known for cutting-edge robotics research.",
+    },
+    {
+      name: "NITK Surathkal",
+      logo: "nitk.png",
+      fact: "Only NIT with a private beach!",
+    },
+    {
+      name: "IIT Guwahati",
+      logo: "iitguwahati.png",
+      fact: "India's most beautiful campus!",
+    },
+    {
+      name: "IIT Kharagpur",
+      logo: "iitkgp.png",
+      fact: "Has its own railway station inside the campus.",
+    },
+    {
+      name: "COEP Technological University Pune",
+      logo: "coep.png",
+      fact: "Oldest engineering college in India.",
+    },
+    {
+      name: "IIT Delhi",
+      logo: "delhi.png",
+      fact: "Produces the highest number of startup founders.",
+    },
+    {
+      name: "Dayalbagh Educational Institute",
+      logo: "dayalbagh.png",
+      fact: "Focuses on holistic education & sustainability.",
+    },
+    {
+      name: "Amrita Vishwa Vidyapeetham",
+      logo: "amritha.png",
+      fact: "Leads in humanitarian robotics projects.",
+    },
   ];
 
   const [confettiTriggered, setConfettiTriggered] = useState(false);
@@ -35,9 +79,12 @@ const Institutes = () => {
   };
 
   return (
-    <div id="institutes-section" className="py-6 px-12 relative bg-gray-50 mb-12">
-      {/* View All Button */}
-      <div className="absolute top-8 right-6">
+    <div
+      id="institutes-section"
+      className="py-6 px-12 relative bg-gray-50 mb-12"
+    >
+      {/* View All Button - Made Responsive */}
+      <div className="absolute top-8 right-6 z-10">
         <Link href="/institute/all">
           <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300">
             View All <FiExternalLink className="text-lg" />
@@ -52,17 +99,28 @@ const Institutes = () => {
       <div className="overflow-hidden py-12 relative">
         <div className="scrolling-container">
           {[...institutes, ...institutes].map((institute, index) => (
-            <Link href={`/institute/${institute.name.replace(/\s+/g, "-").toLowerCase()}`} key={index}>
+            <Link
+              href={`/institute/${institute.name
+                .replace(/\s+/g, "-")
+                .toLowerCase()}`}
+              key={index}
+            >
               <div className="card group" onClick={triggerConfetti}>
                 <div className="card-inner">
                   <div className="card-front">
-                    <img src={institute.logo} alt={institute.name} className="w-32 h-32 object-contain" />
+                    <img
+                      src={institute.logo || "/placeholder.svg"}
+                      alt={institute.name}
+                      className="w-32 h-32 object-contain"
+                    />
                     <p className="text-center text-xl font-semibold text-gray-700 mt-4 px-4">
                       {institute.name}
                     </p>
                   </div>
                   <div className="card-back">
-                    <p className="text-center text-lg whitespace-normal break-words">{institute.fact}</p>
+                    <p className="text-center text-lg whitespace-normal break-words">
+                      {institute.fact}
+                    </p>
                   </div>
                 </div>
                 <div className="glow-effect"></div>
@@ -71,7 +129,6 @@ const Institutes = () => {
           ))}
         </div>
       </div>
-
 
       {/* Floating & Scroll Animations */}
       <style>
@@ -166,6 +223,34 @@ const Institutes = () => {
 
         .card:hover .glow-effect {
           opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+          #institutes-section {
+            padding-top: 4rem;
+          }
+          
+          #institutes-section .absolute.top-8.right-6 {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          #institutes-section {
+            padding: 4rem 0.75rem 1rem 0.75rem;
+          }
+          
+          #institutes-section .absolute.top-8.right-6 {
+            top: 0.75rem;
+            right: 0.75rem;
+          }
+          
+          #institutes-section .absolute.top-8.right-6 button {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+          }
         }
         `}
       </style>

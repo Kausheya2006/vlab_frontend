@@ -1,22 +1,24 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import "./page.css";
 import ContactSection from "./ContactSection";
 
-
 const systemOverview = {
   title: "System Overview",
-  description: "Virtual Labs project is an initiative of the Ministry of Education (MoE), Government of India under the National Mission on Education through Information and Communication Technology (NMEICT). This consortium activity involves twelve participating institutes, with IIT Delhi as the coordinating institute. It represents a paradigm shift in ICT-based education, pioneering remote experimentation. The project has developed over 100 Virtual Labs comprising approximately 700+ web-enabled experiments designed for remote operation and viewing. These labs cover nine disciplines of science and engineering, providing students with the ability to perform experiments using only a computer with an internet connection.",
+  description:
+    "Virtual Labs project is an initiative of the Ministry of Education (MoE), Government of India under the National Mission on Education through Information and Communication Technology (NMEICT). This consortium activity involves twelve participating institutes, with IIT Delhi as the coordinating institute. It represents a paradigm shift in ICT-based education, pioneering remote experimentation. The project has developed over 100 Virtual Labs comprising approximately 700+ web-enabled experiments designed for remote operation and viewing. These labs cover nine disciplines of science and engineering, providing students with the ability to perform experiments using only a computer with an internet connection.",
   beneficiaries: [
     "Students and faculty members of science and engineering colleges lacking access to good lab facilities or instruments",
     "High school students, to trigger curiosity and potentially motivate them to pursue higher studies",
     "Researchers in different institutes for collaboration and resource sharing",
     "Engineering colleges benefiting from the content and related teaching resources",
-    "Students in rural areas who can now perform experiments previously inaccessible to them"
+    "Students in rural areas who can now perform experiments previously inaccessible to them",
   ],
-  infrastructure: "Virtual Labs require no additional infrastructural setup for conducting experiments at user premises. The simulation-based experiments can be accessed remotely via internet, while remote-triggered labs allow users to connect to real equipment using a web browser.",
-  additionalInfo: "The Virtual Labs website (vlab.co.in) has received over 233,570 site visits and 1,034,443 page visits in just six months, with over 4,500 registered users from 134 countries. It handles around 100GB of traffic per month."
+  infrastructure:
+    "Virtual Labs require no additional infrastructural setup for conducting experiments at user premises. The simulation-based experiments can be accessed remotely via internet, while remote-triggered labs allow users to connect to real equipment using a web browser.",
+  additionalInfo:
+    "The Virtual Labs website (vlab.co.in) has received over 233,570 site visits and 1,034,443 page visits in just six months, with over 4,500 registered users from 134 countries. It handles around 100GB of traffic per month.",
 };
 
 const SystemOverview = () => {
@@ -37,7 +39,6 @@ const SystemOverview = () => {
     </div>
   );
 };
-
 
 const About = () => {
   const particlesRef = useRef(null);
@@ -136,58 +137,78 @@ const About = () => {
   }, []);
 
   // Typing effect for hero text
-  // Typing effect for hero text
-useEffect(() => {
-  if (!heroTextRef.current) return;
+  useEffect(() => {
+    if (!heroTextRef.current) return;
 
-  const text = "About Virtual Labs";
-  const element = heroTextRef.current;
-  let i = 0;
+    const text = "About Virtual Labs";
+    const element = heroTextRef.current;
+    let i = 0;
 
-  // Ensure text is cleared before starting
-  element.textContent = "";
+    // Ensure text is cleared before starting
+    element.textContent = "";
 
-  // Flag to prevent multiple executions
-  let isTyping = true;
+    // Flag to prevent multiple executions
+    let isTyping = true;
 
-  const typeWriter = () => {
-    if (i < text.length && isTyping) {
-      element.textContent += text.charAt(i);
-      i++;
-      setTimeout(typeWriter, 150);
-    }
-  };
-
-  typeWriter();
-
-  const counters = document.querySelectorAll(".stat-number");
-
-  counters.forEach((counter) => {
-    let target = +counter.getAttribute("data-count");
-    let count = 0;
-    let increment = target / 50; // Adjust speed by changing the divisor
-
-    const updateCount = () => {
-      count += increment;
-      if (count < target) {
-        counter.textContent = Math.floor(count);
-        requestAnimationFrame(updateCount);
-      } else {
-        counter.textContent = target; // Ensure exact final value
+    const typeWriter = () => {
+      if (i < text.length && isTyping) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 150);
       }
     };
 
-    updateCount();
-  });
+    typeWriter();
 
-  return () => {
-    // Cleanup function to stop typing on unmount
-    isTyping = false;
-  };
+    const counters = document.querySelectorAll(".stat-number");
 
-  
-}, []);
+    counters.forEach((counter) => {
+      const target = +counter.getAttribute("data-count");
+      let count = 0;
+      const increment = target / 50; // Adjust speed by changing the divisor
 
+      const updateCount = () => {
+        count += increment;
+        if (count < target) {
+          counter.textContent = Math.floor(count);
+          requestAnimationFrame(updateCount);
+        } else {
+          counter.textContent = target; // Ensure exact final value
+        }
+      };
+
+      updateCount();
+    });
+
+    return () => {
+      // Cleanup function to stop typing on unmount
+      isTyping = false;
+    };
+  }, []);
+
+  // Add collapsible functionality for panels
+  useEffect(() => {
+    const panelHeaders = document.querySelectorAll(".panel-header");
+
+    panelHeaders.forEach((header) => {
+      header.addEventListener("click", () => {
+        // Toggle collapsed class on the header
+        header.classList.toggle("collapsed");
+
+        // Find the next sibling which should be the panel content
+        const content = header.nextElementSibling;
+        if (content && content.classList.contains("panel-content")) {
+          content.classList.toggle("collapsed");
+        }
+      });
+    });
+
+    return () => {
+      panelHeaders.forEach((header) => {
+        header.removeEventListener("click", () => {});
+      });
+    };
+  }, []);
 
   return (
     <div className="neo-futuristic">
@@ -202,7 +223,11 @@ useEffect(() => {
         </div>
 
         <div className="hero-content">
-          <h1 ref={heroTextRef} className="cyber-glitch"></h1>
+          <h1
+            ref={heroTextRef}
+            className="cyber-glitch"
+            data-text="About Virtual Labs"
+          ></h1>
           <p className="hero-subtitle">
             <span className="tech-bracket">[</span>
             Revolutionizing education through ICT-based remote experimentation
@@ -244,8 +269,7 @@ useEffect(() => {
           </div>
 
           <div className="panel-content">
-            <SystemOverview/>
-
+            <SystemOverview />
 
             <div className="tech-diagram">
               <div className="diagram-node center">Virtual Labs Core</div>
@@ -349,10 +373,8 @@ useEffect(() => {
       </div>
 
       <ContactSection />
-      
     </div>
   );
 };
 
 export default About;
-

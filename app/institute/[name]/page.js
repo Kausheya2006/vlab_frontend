@@ -1,19 +1,20 @@
-"use client"
-import { useParams } from "next/navigation"
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import "./institutes.css"
+"use client";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import "./institutes.css";
 
 const InstitutePage = () => {
-  const { name } = useParams()
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [activeInstitute, setActiveInstitute] = useState(null)
+  const { name } = useParams();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [activeInstitute, setActiveInstitute] = useState(null);
 
   // Dictionary for institutes and their labs
   const institutesData = {
     "iit-guwahati": {
       name: "IIT Guwahati",
-      description: "Indian Institute of Technology Guwahati, a premier institute in engineering and research.",
+      description:
+        "Indian Institute of Technology Guwahati, a premier institute in engineering and research.",
       labs: [
         "Virtual Mass Transfer Lab",
         "Virtual English and Communication Lab",
@@ -37,7 +38,8 @@ const InstitutePage = () => {
     },
     "iit-delhi": {
       name: "IIT Delhi",
-      description: "Indian Institute of Technology Delhi, a globally recognized center for innovation and excellence.",
+      description:
+        "Indian Institute of Technology Delhi, a globally recognized center for innovation and excellence.",
       labs: [
         "Bioreactor Modeling and Simulation Lab",
         "Smart Structures and Dynamics Lab",
@@ -108,7 +110,8 @@ const InstitutePage = () => {
     },
     "amrita-vishwa-vidyapeetham": {
       name: "Amrita Vishwa Vidyapeetham",
-      description: "A private university excelling in biotechnology, engineering, and health sciences education.",
+      description:
+        "A private university excelling in biotechnology, engineering, and health sciences education.",
       labs: [
         "Bioinformatics Virtual Lab I",
         "Bioinformatics Virtual Lab II",
@@ -145,7 +148,8 @@ const InstitutePage = () => {
     },
     "nitk-surathkal": {
       name: "NITK Surathkal",
-      description: "National Institute of Technology Karnataka, known for quality technical education and research.",
+      description:
+        "National Institute of Technology Karnataka, known for quality technical education and research.",
       labs: [
         "Fluid Mechanics Lab",
         "Transportation Engineering Lab",
@@ -193,7 +197,8 @@ const InstitutePage = () => {
     },
     "iit-roorkee": {
       name: "IIT Roorkee",
-      description: "Indian Institute of Technology Roorkee, a leader in engineering education and research.",
+      description:
+        "Indian Institute of Technology Roorkee, a leader in engineering education and research.",
       labs: [
         "Electrical Machines Lab",
         "Surveying Lab",
@@ -209,75 +214,93 @@ const InstitutePage = () => {
         "Microwave Engineering Lab (New)",
       ],
     },
-    "iit-kanpur":{
+    "iit-kanpur": {
       name: "IIT Kanpur",
       description: "Indian Institute of Technology Kanpur",
-      labs:[
-      "Electronics Lab",
-      "Aerospace Engineering Lab"]
-    }
-  }
+      labs: ["Electronics Lab", "Aerospace Engineering Lab"],
+    },
+  };
 
   // If no parameter is provided, show all institutes
   const allInstitutes = Object.keys(institutesData).map((key) => ({
     id: key,
     ...institutesData[key],
-  }))
+  }));
 
   useEffect(() => {
     // Simulate loading to ensure proper rendering
     const timer = setTimeout(() => {
-      setIsLoaded(true)
+      setIsLoaded(true);
 
       // Force layout recalculation
-      window.dispatchEvent(new Event("resize"))
-    }, 100)
+      window.dispatchEvent(new Event("resize"));
+    }, 100);
 
     // Clean up the timer
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     // Function to adjust container height based on content
     const adjustContainerHeight = () => {
-      const container = document.querySelector(".institute-content")
-      const labsList = document.querySelector(".labs-list")
+      const container = document.querySelector(".institute-content");
+      const labsList = document.querySelector(".labs-list");
 
       if (container && labsList) {
         // Reset any fixed height
-        container.style.height = "auto"
+        container.style.height = "auto";
 
-        // Get the actual content height
-        const contentHeight = labsList.scrollHeight
+        // Get the number of labs
+        const labItems = labsList.querySelectorAll(".lab-item");
+        const labCount = labItems.length;
+
+        // Calculate grid columns based on screen width
+        const screenWidth = window.innerWidth;
+        let columns = 1;
+        if (screenWidth >= 768) {
+          columns = Math.floor(screenWidth / 350);
+          columns = Math.min(columns, 3); // Cap at 3 columns max
+        }
+
+        // Calculate rows needed (round up)
+        const rows = Math.ceil(labCount / columns);
+
+        // Set grid-template-rows to ensure equal height
+        labsList.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
         // Set a minimum height but allow growth
-        container.style.minHeight = `${contentHeight + 150}px`
+        // Add extra padding based on row count
+        container.style.minHeight = `${rows * 70 + 200}px`;
       }
-    }
+    };
 
     // Adjust on load and window resize
     if (isLoaded) {
-      adjustContainerHeight()
-      window.addEventListener("resize", adjustContainerHeight)
+      adjustContainerHeight();
+      window.addEventListener("resize", adjustContainerHeight);
     }
 
     // Cleanup
     return () => {
-      window.removeEventListener("resize", adjustContainerHeight)
-    }
-  }, [isLoaded, name])
+      window.removeEventListener("resize", adjustContainerHeight);
+    };
+  }, [isLoaded, name]);
 
   // Handle institute click
   const handleInstituteClick = (institute) => {
-    setActiveInstitute(institute.id === activeInstitute ? null : institute.id)
-  }
+    setActiveInstitute(institute.id === activeInstitute ? null : institute.id);
+  };
 
   // If a specific institute is requested via URL parameter
   if (name && institutesData[name]) {
-    const institute = institutesData[name]
+    const institute = institutesData[name];
 
     return (
-      <div className={`institutes-page specific-institute ${isLoaded ? "loaded" : ""}`}>
+      <div
+        className={`institutes-page specific-institute ${
+          isLoaded ? "loaded" : ""
+        }`}
+      >
         <div className="institute-header">
           <div className="header-content">
             <h1>{institute.name}</h1>
@@ -321,18 +344,20 @@ const InstitutePage = () => {
         <div className="bg-circle circle2"></div>
         <div className="bg-circle circle3"></div>
       </div>
-    )
+    );
   }
 
   // Show all institutes if no specific one is requested
   return (
-    <div className={`institutes-page all-institutes ${isLoaded ? "loaded" : ""}`}>
+    <div
+      className={`institutes-page all-institutes ${isLoaded ? "loaded" : ""}`}
+    >
       <div className="institutes-header">
         <h1>Virtual Labs Institutes</h1>
         <div className="header-divider"></div>
         <p className="header-description">
-          Explore virtual labs from top educational institutions across India. Click on an institute to view its
-          available virtual labs.
+          Explore virtual labs from top educational institutions across India.
+          Click on an institute to view its available virtual labs.
         </p>
       </div>
 
@@ -340,12 +365,20 @@ const InstitutePage = () => {
         {allInstitutes.map((institute) => (
           <div
             key={institute.id}
-            className={`institute-card ${activeInstitute === institute.id ? "active" : ""}`}
+            className={`institute-card ${
+              activeInstitute === institute.id ? "active" : ""
+            }`}
             onClick={() => handleInstituteClick(institute)}
           >
             <div className="institute-card-header">
               <h2>{institute.name}</h2>
-              <span className={`expand-icon ${activeInstitute === institute.id ? "active" : ""}`}>+</span>
+              <span
+                className={`expand-icon ${
+                  activeInstitute === institute.id ? "active" : ""
+                }`}
+              >
+                +
+              </span>
             </div>
 
             <div className="institute-card-content">
@@ -357,7 +390,10 @@ const InstitutePage = () => {
 
               {activeInstitute === institute.id && (
                 <div className="institute-actions">
-                  <Link href={`/institute/${institute.id}`} className="view-labs-button">
+                  <Link
+                    href={`/institute/${institute.id}`}
+                    className="view-labs-button"
+                  >
                     View All Labs
                     <span className="button-arrow">→</span>
                   </Link>
@@ -372,9 +408,17 @@ const InstitutePage = () => {
       <div className="bg-circle circle1"></div>
       <div className="bg-circle circle2"></div>
       <div className="bg-circle circle3"></div>
+      <style jsx global>{`
+        @media (min-width: 768px) {
+          body,
+          html {
+            background: linear-gradient(135deg, #0a1128, #1c2541);
+            min-height: 100vh;
+          }
+        }
+      `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default InstitutePage
-
+export default InstitutePage;
