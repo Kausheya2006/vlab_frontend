@@ -14,6 +14,7 @@ import {
   FiMessageSquare,
 } from "react-icons/fi"
 import LiveComments from "../../components/LiveComments"
+import Link from "next/link"
 // Function to render stars for experiment ratings
 const renderStars = (rating) => {
   const fullStars = Math.floor(rating)
@@ -202,6 +203,19 @@ const sections = [
         </div>
         <div className="content-body">
           <div className="experiments-container">
+          <div className="experiment-card">
+              <div className="experiment-number">01</div>
+              <div className="experiment-content">
+                <h3>Interactive Lab Demo</h3>
+                <p>Drag and move the box around to test interactive elements in the lab environment.</p>
+                <div className="experiment-meta">
+                  <div className="difficulty">Beginner</div>
+                  <div className="duration">0 hours</div>
+                  {renderStars(5)}
+                </div>
+                <Link href='/box' className="experiment-btn">Start Experiment</Link>
+              </div>
+            </div>
             <div className="experiment-card">
               <div className="experiment-number">01</div>
               <div className="experiment-content">
