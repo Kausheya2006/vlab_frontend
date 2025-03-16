@@ -4,6 +4,7 @@
 
 ## Features
 
+- **Live-Interactive Labs**: There are a labs added where people can interact with objects in real time.
 - **Responsive Design**: The website is fully responsive, ensuring optimal user experience across a variety of devices including desktops, tablets, and smartphones.
 - **Chatbot Integration**: A real-time chatbot powered by Gemini provides users with instant support, answering questions and assisting with navigating the platform.
 - **Modern User Interface**: The platform features a sleek, user-friendly UI with smooth animations and intuitive navigation for a seamless experience.
