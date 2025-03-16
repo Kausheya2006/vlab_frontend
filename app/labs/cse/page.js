@@ -1,10 +1,8 @@
-"use client"
-import { useState, useEffect, useRef } from "react"
-import "./cse.css"
-import "./live-comments.css"
+"use client";
+import { useState, useEffect, useRef } from "react";
+import "./cse.css";
+import "./live-comments.css";
 import {
-  FiMenu,
-  FiX,
   FiChevronRight,
   FiStar,
   FiBookOpen,
@@ -12,14 +10,14 @@ import {
   FiTarget,
   FiAlignLeft,
   FiMessageSquare,
-} from "react-icons/fi"
-import LiveComments from "../../components/LiveComments"
-import Link from "next/link"
+} from "react-icons/fi";
+import LiveComments from "../../components/LiveComments";
+import Link from "next/link";
 // Function to render stars for experiment ratings
 const renderStars = (rating) => {
-  const fullStars = Math.floor(rating)
-  const halfStar = rating % 1 !== 0
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0)
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 !== 0;
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
   return (
     <div className="star-rating">
       {[...Array(fullStars)].map((_, i) => (
@@ -31,8 +29,8 @@ const renderStars = (rating) => {
       ))}
       <span className="rating-value">{rating.toFixed(1)}</span>
     </div>
-  )
-}
+  );
+};
 const sections = [
   {
     name: "Introduction",
@@ -47,32 +45,40 @@ const sections = [
         </div>
         <div className="content-body">
           <p>
-            Computer science is all about providing abstractions and their efficient implementation. An abstraction
-            provides a logical view of a certain service or a resource by giving a well-defined black-box model, its
-            associated properties, and hides the internal details of the black-box.
+            Computer science is all about providing abstractions and their
+            efficient implementation. An abstraction provides a logical view of
+            a certain service or a resource by giving a well-defined black-box
+            model, its associated properties, and hides the internal details of
+            the black-box.
           </p>
           <div className="highlight-box">
             <p>
-              For example, the design and implementation of a processor are abstracted away through the Instruction Set
-              Architecture (ISA) of the processor. Further, high-level programming languages like C, C++ abstract away
-              the ISA of a processor by allowing programmers to express their intent using constructs like for-loops,
+              For example, the design and implementation of a processor are
+              abstracted away through the Instruction Set Architecture (ISA) of
+              the processor. Further, high-level programming languages like C,
+              C++ abstract away the ISA of a processor by allowing programmers
+              to express their intent using constructs like for-loops,
               while-loops, etc.
             </p>
           </div>
           <p>
-            In this lab, the first two experiments deal with two primitive data abstractions: integers and
-            floating-point numbers. We look at various approaches for representing integers and floating-point numbers
-            in binary and their pros and cons.
+            In this lab, the first two experiments deal with two primitive data
+            abstractions: integers and floating-point numbers. We look at
+            various approaches for representing integers and floating-point
+            numbers in binary and their pros and cons.
           </p>
           <p>
-            The next four experiments involve writing assembly language programs using MIPS and ARM ISA. In these
-            experiments, we learn how to map high-level language constructs to a sequence of assembly language
+            The next four experiments involve writing assembly language programs
+            using MIPS and ARM ISA. In these experiments, we learn how to map
+            high-level language constructs to a sequence of assembly language
             instructions.
           </p>
           <p>
-            In the last experiment, we study how to design a processor for a subset of MIPS ISA using the Single Cycle
-            Per Instruction approach. This helps us understand how high-level language constructs map to assembly
-            programs, followed by realizing assembly instructions using logic gates.
+            In the last experiment, we study how to design a processor for a
+            subset of MIPS ISA using the Single Cycle Per Instruction approach.
+            This helps us understand how high-level language constructs map to
+            assembly programs, followed by realizing assembly instructions using
+            logic gates.
           </p>
           <div className="info-card">
             <div className="info-card-header">
@@ -80,12 +86,16 @@ const sections = [
             </div>
             <div className="info-card-body">
               <p>
-                Processor, Memory, and I/O Devices are three major subsystems in a computer. Cache memory plays a
-                crucial role in bridging the speed mismatch between a processor and the associated main memory module.
+                Processor, Memory, and I/O Devices are three major subsystems in
+                a computer. Cache memory plays a crucial role in bridging the
+                speed mismatch between a processor and the associated main
+                memory module.
               </p>
               <p>
-                We have three experiments on cache memories illustrating various possible cache organizations and their
-                impact on program performance. Additionally, one experiment covers the concept of Virtual Memory.
+                We have three experiments on cache memories illustrating various
+                possible cache organizations and their impact on program
+                performance. Additionally, one experiment covers the concept of
+                Virtual Memory.
               </p>
             </div>
           </div>
@@ -94,7 +104,9 @@ const sections = [
           <ul className="dependencies-list">
             <li>
               <span className="dependency-icon">🌐</span>
-              <span className="dependency-text">Browsers - Firefox 50 and lower versions, Internet Explorer</span>
+              <span className="dependency-text">
+                Browsers - Firefox 50 and lower versions, Internet Explorer
+              </span>
             </li>
             <li>
               <span className="dependency-icon">🔌</span>
@@ -118,8 +130,9 @@ const sections = [
             <div className="recommendation-content">
               <h4>Recommendation</h4>
               <p>
-                We recommend using our customized VirtualBox for smooth simulation execution. Install VirtualBox from
-                Virtual Labs to ensure compatibility with required dependencies.
+                We recommend using our customized VirtualBox for smooth
+                simulation execution. Install VirtualBox from Virtual Labs to
+                ensure compatibility with required dependencies.
               </p>
               <button className="download-btn">Download VirtualBox</button>
             </div>
@@ -145,33 +158,51 @@ const sections = [
               <div className="objective-icon">🎯</div>
               <div className="objective-content">
                 <h3>Primary Objective</h3>
-                <p>To understand the fundamental concepts of computer organization and architecture.</p>
+                <p>
+                  To understand the fundamental concepts of computer
+                  organization and architecture.
+                </p>
               </div>
             </div>
             <div className="objectives-grid">
               <div className="objective-item">
                 <div className="objective-number">01</div>
-                <p>Learn binary representation of integers and floating-point numbers</p>
+                <p>
+                  Learn binary representation of integers and floating-point
+                  numbers
+                </p>
               </div>
               <div className="objective-item">
                 <div className="objective-number">02</div>
-                <p>Understand assembly language programming using MIPS and ARM ISA</p>
+                <p>
+                  Understand assembly language programming using MIPS and ARM
+                  ISA
+                </p>
               </div>
               <div className="objective-item">
                 <div className="objective-number">03</div>
-                <p>Study processor design using Single Cycle Per Instruction approach</p>
+                <p>
+                  Study processor design using Single Cycle Per Instruction
+                  approach
+                </p>
               </div>
               <div className="objective-item">
                 <div className="objective-number">04</div>
-                <p>Explore cache memory organization and virtual memory concepts</p>
+                <p>
+                  Explore cache memory organization and virtual memory concepts
+                </p>
               </div>
               <div className="objective-item">
                 <div className="objective-number">05</div>
-                <p>Bridge theoretical knowledge with practical implementation</p>
+                <p>
+                  Bridge theoretical knowledge with practical implementation
+                </p>
               </div>
               <div className="objective-item">
                 <div className="objective-number">06</div>
-                <p>Develop problem-solving skills in computer architecture domain</p>
+                <p>
+                  Develop problem-solving skills in computer architecture domain
+                </p>
               </div>
             </div>
           </div>
@@ -179,11 +210,18 @@ const sections = [
             <h3>Learning Outcomes</h3>
             <p>After completing this lab, students will be able to:</p>
             <ul>
-              <li>Perform arithmetic operations on binary representations of numbers</li>
+              <li>
+                Perform arithmetic operations on binary representations of
+                numbers
+              </li>
               <li>Write and debug assembly language programs</li>
               <li>Design simple processor components</li>
-              <li>Analyze the performance impact of different cache organizations</li>
-              <li>Understand the concept and implementation of virtual memory</li>
+              <li>
+                Analyze the performance impact of different cache organizations
+              </li>
+              <li>
+                Understand the concept and implementation of virtual memory
+              </li>
             </ul>
           </div>
         </div>
@@ -203,37 +241,52 @@ const sections = [
         </div>
         <div className="content-body">
           <div className="experiments-container">
-          <div className="experiment-card">
+            <div className="experiment-card">
               <div className="experiment-number">00</div>
               <div className="experiment-content">
                 <h3>Interactive Lab Demo</h3>
-                <p>Drag and move the box around to test interactive elements in the lab environment.</p>
+                <p>
+                  Drag and move the box around to test interactive elements in
+                  the lab environment.
+                </p>
                 <div className="experiment-meta">
                   <div className="difficulty">Beginner</div>
                   <div className="duration">0 hours</div>
                   {renderStars(5)}
                 </div>
-                <Link href='/box' className="experiment-btn">Start Experiment</Link>
+                <Link href="/box" className="experiment-btn">
+                  Start Experiment
+                </Link>
               </div>
             </div>
             <div className="experiment-card">
               <div className="experiment-number">01</div>
               <div className="experiment-content">
                 <h3>Representation of Integers and their Arithmetic</h3>
-                <p>Learn about different ways to represent integers in binary and perform arithmetic operations.</p>
+                <p>
+                  Learn about different ways to represent integers in binary and
+                  perform arithmetic operations.
+                </p>
                 <div className="experiment-meta">
                   <div className="difficulty">Intermediate</div>
                   <div className="duration">1.5 hours</div>
                   {renderStars(4)}
                 </div>
-                <button className="experiment-btn">Start Experiment</button>
+                <Link href="/integer" className="experiment-btn">
+                  Start Experiment
+                </Link>
               </div>
             </div>
             <div className="experiment-card">
               <div className="experiment-number">02</div>
               <div className="experiment-content">
-                <h3>Representation of Floating Point Numbers and their Arithmetic</h3>
-                <p>Understand IEEE 754 standard for floating-point representation and arithmetic operations.</p>
+                <h3>
+                  Representation of Floating Point Numbers and their Arithmetic
+                </h3>
+                <p>
+                  Understand IEEE 754 standard for floating-point representation
+                  and arithmetic operations.
+                </p>
                 <div className="experiment-meta">
                   <div className="difficulty">Advanced</div>
                   <div className="duration">2 hours</div>
@@ -246,7 +299,10 @@ const sections = [
               <div className="experiment-number">03</div>
               <div className="experiment-content">
                 <h3>Virtual Memory</h3>
-                <p>Explore the concept of virtual memory, page tables, and address translation.</p>
+                <p>
+                  Explore the concept of virtual memory, page tables, and
+                  address translation.
+                </p>
                 <div className="experiment-meta">
                   <div className="difficulty">Intermediate</div>
                   <div className="duration">1.5 hours</div>
@@ -259,7 +315,10 @@ const sections = [
               <div className="experiment-number">04</div>
               <div className="experiment-content">
                 <h3>MIPS Assembly Language Programming - 1</h3>
-                <p>Introduction to MIPS assembly language programming with basic instructions and control flow.</p>
+                <p>
+                  Introduction to MIPS assembly language programming with basic
+                  instructions and control flow.
+                </p>
                 <div className="experiment-meta">
                   <div className="difficulty">Beginner</div>
                   <div className="duration">2 hours</div>
@@ -272,7 +331,9 @@ const sections = [
               <div className="experiment-number">05</div>
               <div className="experiment-content">
                 <h3>ARM Assembly Language Programming - 1</h3>
-                <p>Learn ARM assembly language basics and write simple programs.</p>
+                <p>
+                  Learn ARM assembly language basics and write simple programs.
+                </p>
                 <div className="experiment-meta">
                   <div className="difficulty">Intermediate</div>
                   <div className="duration">2 hours</div>
@@ -285,7 +346,10 @@ const sections = [
               <div className="experiment-number">06</div>
               <div className="experiment-content">
                 <h3>ARM Assembly Language Programming - 2</h3>
-                <p>Advanced ARM assembly programming with complex data structures and algorithms.</p>
+                <p>
+                  Advanced ARM assembly programming with complex data structures
+                  and algorithms.
+                </p>
                 <div className="experiment-meta">
                   <div className="difficulty">Advanced</div>
                   <div className="duration">2.5 hours</div>
@@ -298,13 +362,18 @@ const sections = [
               <div className="experiment-number">07</div>
               <div className="experiment-content">
                 <h3>Single Cycle MIPS CPU</h3>
-                <p>Design and implement a single-cycle MIPS CPU using digital logic components.</p>
+                <p>
+                  Design and implement a single-cycle MIPS CPU using digital
+                  logic components.
+                </p>
                 <div className="experiment-meta">
                   <div className="difficulty">Advanced</div>
                   <div className="duration">3 hours</div>
                   {renderStars(4.5)}
                 </div>
-                <button className="experiment-btn">Start Experiment</button>
+                <Link href="/mips" className="experiment-btn">
+                  Start Experiment
+                </Link>
               </div>
             </div>
           </div>
@@ -370,21 +439,30 @@ const sections = [
                   <div className="prerequisite-icon">📚</div>
                   <div className="prerequisite-content">
                     <h4>Digital Logic Design</h4>
-                    <p>Basic understanding of logic gates, boolean algebra, and digital circuits</p>
+                    <p>
+                      Basic understanding of logic gates, boolean algebra, and
+                      digital circuits
+                    </p>
                   </div>
                 </div>
                 <div className="prerequisite-item">
                   <div className="prerequisite-icon">💻</div>
                   <div className="prerequisite-content">
                     <h4>Programming Fundamentals</h4>
-                    <p>Experience with at least one high-level programming language (C/C++ preferred)</p>
+                    <p>
+                      Experience with at least one high-level programming
+                      language (C/C++ preferred)
+                    </p>
                   </div>
                 </div>
                 <div className="prerequisite-item">
                   <div className="prerequisite-icon">🧮</div>
                   <div className="prerequisite-content">
                     <h4>Basic Mathematics</h4>
-                    <p>Knowledge of binary number system and basic mathematical operations</p>
+                    <p>
+                      Knowledge of binary number system and basic mathematical
+                      operations
+                    </p>
                   </div>
                 </div>
               </div>
@@ -409,8 +487,8 @@ const sections = [
           <div className="alignment-container">
             <div className="alignment-intro">
               <p>
-                This virtual lab aligns with the following courses typically offered in Computer Science and Engineering
-                curricula:
+                This virtual lab aligns with the following courses typically
+                offered in Computer Science and Engineering curricula:
               </p>
             </div>
             <div className="courses-grid">
@@ -420,7 +498,10 @@ const sections = [
                   <h3>Computer Organization and Architecture</h3>
                 </div>
                 <div className="course-body">
-                  <p>Core course covering fundamentals of computer hardware organization and architecture</p>
+                  <p>
+                    Core course covering fundamentals of computer hardware
+                    organization and architecture
+                  </p>
                   <div className="course-topics">
                     <span className="topic-tag">Digital Logic</span>
                     <span className="topic-tag">ISA</span>
@@ -435,7 +516,10 @@ const sections = [
                   <h3>Microprocessors and Interfacing</h3>
                 </div>
                 <div className="course-body">
-                  <p>Course focused on microprocessor architecture and hardware interfacing techniques</p>
+                  <p>
+                    Course focused on microprocessor architecture and hardware
+                    interfacing techniques
+                  </p>
                   <div className="course-topics">
                     <span className="topic-tag">Assembly</span>
                     <span className="topic-tag">I/O</span>
@@ -449,7 +533,10 @@ const sections = [
                   <h3>Computer Architecture</h3>
                 </div>
                 <div className="course-body">
-                  <p>Advanced course on modern computer architecture concepts and design principles</p>
+                  <p>
+                    Advanced course on modern computer architecture concepts and
+                    design principles
+                  </p>
                   <div className="course-topics">
                     <span className="topic-tag">Pipelining</span>
                     <span className="topic-tag">Cache</span>
@@ -469,12 +556,16 @@ const sections = [
                 <div className="table-row">
                   <div className="cell">Integer Representation</div>
                   <div className="cell">Number Systems</div>
-                  <div className="cell">Understand binary representation of integers</div>
+                  <div className="cell">
+                    Understand binary representation of integers
+                  </div>
                 </div>
                 <div className="table-row">
                   <div className="cell">Floating Point Representation</div>
                   <div className="cell">IEEE 754 Standard</div>
-                  <div className="cell">Implement floating-point arithmetic</div>
+                  <div className="cell">
+                    Implement floating-point arithmetic
+                  </div>
                 </div>
                 <div className="table-row">
                   <div className="cell">MIPS Assembly</div>
@@ -511,8 +602,9 @@ const sections = [
               <div className="feedback-message">
                 <h3>We Value Your Input!</h3>
                 <p>
-                  Your feedback helps us improve the Virtual Labs experience for everyone. Please take a moment to share
-                  your thoughts on this lab.
+                  Your feedback helps us improve the Virtual Labs experience for
+                  everyone. Please take a moment to share your thoughts on this
+                  lab.
                 </p>
               </div>
             </div>
@@ -558,68 +650,68 @@ const sections = [
       </div>
     ),
   },
-]
+];
 const CSEPage = () => {
-  const [activeSection, setActiveSection] = useState(sections[0])
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const contentRef = useRef(null)
-  const [animateContent, setAnimateContent] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  
+  const [activeSection, setActiveSection] = useState(sections[0]);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const contentRef = useRef(null);
+  const [animateContent, setAnimateContent] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   // Function to toggle mobile menu
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-    setIsSidebarVisible(!isSidebarVisible)
-  }
+    setMobileMenuOpen(!mobileMenuOpen);
+    setIsSidebarVisible(!isSidebarVisible);
+  };
 
   // Function to check if the screen size is mobile
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < 768);
       // Auto-show sidebar on desktop
       if (window.innerWidth >= 768) {
-        setIsSidebarVisible(true)
+        setIsSidebarVisible(true);
       } else {
-        setIsSidebarVisible(false)
+        setIsSidebarVisible(false);
       }
-    }
+    };
     // Check on initial load
-    checkScreenSize()
+    checkScreenSize();
     // Set up event listener for window resize
-    window.addEventListener("resize", checkScreenSize)
+    window.addEventListener("resize", checkScreenSize);
     // Clean up event listener
-    return () => window.removeEventListener("resize", checkScreenSize)
-  }, [])
-  
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
   useEffect(() => {
     // Reset animation state when section changes
-    setAnimateContent(false)
+    setAnimateContent(false);
     setTimeout(() => {
-      setAnimateContent(true)
-    }, 50)
+      setAnimateContent(true);
+    }, 50);
     // Add scroll event listener for the content area
     const handleScroll = () => {
       if (contentRef.current) {
-        setIsScrolled(contentRef.current.scrollTop > 20)
+        setIsScrolled(contentRef.current.scrollTop > 20);
       }
-    }
-    const contentElement = contentRef.current
+    };
+    const contentElement = contentRef.current;
     if (contentElement) {
-      contentElement.addEventListener("scroll", handleScroll)
+      contentElement.addEventListener("scroll", handleScroll);
     }
     return () => {
       if (contentElement) {
-        contentElement.removeEventListener("scroll", handleScroll)
+        contentElement.removeEventListener("scroll", handleScroll);
       }
-    }
-  }, [activeSection])
-  
+    };
+  }, [activeSection]);
+
   const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible)
-  }
-  
+    setIsSidebarVisible(!isSidebarVisible);
+  };
+
   return (
     <div className="cse-page">
       {/* Hamburger Menu Button for Mobile */}
@@ -628,12 +720,16 @@ const CSEPage = () => {
         <span></span>
         <span></span>
       </div>
-      
+
       {/* Left Vertical Navbar */}
       <nav className={`side-navbar ${isSidebarVisible ? "visible" : ""}`}>
         <div className="nav-header">
           <div className="nav-logo">
-            <img src="/vlead_icon.jpg" alt="Virtual Labs Logo" className="nav-logo-img" />
+            <img
+              src="/vlead_icon.jpg"
+              alt="Virtual Labs Logo"
+              className="nav-logo-img"
+            />
           </div>
           <h3 className="nav-title">Computer Organization Lab</h3>
         </div>
@@ -641,10 +737,12 @@ const CSEPage = () => {
           {sections.map((section, index) => (
             <button
               key={index}
-              className={`nav-item ${activeSection.name === section.name ? "active" : ""}`}
+              className={`nav-item ${
+                activeSection.name === section.name ? "active" : ""
+              }`}
               onClick={() => {
-                setActiveSection(section)
-                if (isMobile) toggleSidebar() // Close sidebar after selection on mobile
+                setActiveSection(section);
+                if (isMobile) toggleSidebar(); // Close sidebar after selection on mobile
               }}
             >
               <span className="nav-item-icon">{section.icon}</span>
@@ -664,21 +762,23 @@ const CSEPage = () => {
           </button>
         </div>
       </nav>
-      
+
       {/* Right Content Area */}
       <div
         ref={contentRef}
-        className={`content-area ${isMobile && isSidebarVisible ? "shifted" : ""} ${animateContent ? "animate" : ""}`}
+        className={`content-area ${
+          isMobile && isSidebarVisible ? "shifted" : ""
+        } ${animateContent ? "animate" : ""}`}
       >
         {activeSection.content}
       </div>
-      
+
       {/* Background Elements */}
       <div className="bg-decoration circle-1"></div>
       <div className="bg-decoration circle-2"></div>
       <div className="bg-decoration circle-3"></div>
       <LiveComments />
     </div>
-  )
-}
-export default CSEPage
+  );
+};
+export default CSEPage;
